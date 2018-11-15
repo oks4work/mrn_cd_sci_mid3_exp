@@ -1,0 +1,323 @@
+@charset "utf-8";
+
+.contentsArea {
+	position: absolute;
+	top: 0px;
+	width: 1034px;
+	height: 780px;
+	font-size: 36px;
+	word-spacing: 1px;
+	letter-spacing: -1px;
+	font-family: NGothicEB;
+
+	background: url(../images/fallEXPage.png) center no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+
+.fallTimer {
+	padding: 0px 5px;
+	background-color: #495c63;
+	border: 3px solid #ffffff;
+	border-radius: 6px;
+	position: absolute;
+	top: 44px;
+	left: 47px;
+	text-align: center;
+	font-size: 25px;
+	color: #aaa;
+}
+.DIGIB {
+	font-size: 46px;
+	color: #fff;
+	display: inline-block;
+}
+
+/******여러 가지 물체 박스**********/
+.opacityBG, 
+.selectObjBox {
+	width: 560px;
+	height: 89px;
+	border-top: 13px solid #7f3f97;
+	border-radius: 10px;
+	box-sizing: border-box;
+	position: absolute;
+	left: 427px;
+	top: 39px;
+}
+.opacityBG {
+	background-color: #ffffff;
+	opacity: 0.6;
+}
+
+.selectObjBox p {
+	background: #7F3F96;
+	border-radius: 10px 1px 0 1px;
+	width: 176px;
+	height: 31px;
+	padding-left: 15px;
+	box-sizing: border-box;
+	letter-spacing: -1px;
+	position: absolute;
+	top: -12px;
+	font-size: 18px;
+	text-align: left;
+	line-height: 31px;
+	color: #ffffff;
+}
+
+.selectObjImg li {
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	position: absolute;
+}
+
+.soccerBall {
+	width: 46px;
+	height: 46px;
+	background: url('../images/fall_soccerBall.png');
+	left: 32px;
+	top: 25px;
+}
+.basketBall {
+	width: 46px;
+	height: 46px;
+	background: url('../images/fall_basketBall.png');
+	left: 99px;
+	top: 25px;
+}
+.baseBall {
+	width: 34px;
+	height: 34px;
+	background: url('../images/fall_baseBall.png');
+	left: 168px;
+	top: 30px;
+}
+.feather {
+	width: 61px;
+	height: 40px;
+	background: url('../images/fall_feather.png');
+	left: 216px;
+	top: 25px;
+}
+.pumpkin {
+	width: 47px;
+	height: 47px;
+	background: url('../images/fall_pumpkin.png');
+	left: 293px;
+	top: 25px;
+}
+.car {
+	width: 92px;
+	height: 47px;
+	background: url('../images/fall_car.png');
+	left: 360px;
+	top: 34px;
+}
+.piano {
+	width: 58px;
+	height: 47px;
+	background: url('../images/fall_piano.png');
+	left: 470px;
+	top: 22px;
+}
+
+/***********드론**************/
+.selected_Obj li div {
+	display: inline-block;
+	width: 140px;
+	height: 62px;
+	background: url('../images/fall_drone.png') no-repeat;
+	background-size: 100% auto;
+	position: absolute;
+	top: 174px;
+}
+.selected_Obj li span {
+	background-size: 100% auto;
+	position: absolute;
+}
+
+.selected_Obj li:nth-of-type(1) div {
+	left: 318px;
+}
+.selected_Obj li .baseBall {
+	top: 215px;
+	left: 371px;
+}
+
+.selected_Obj li:nth-of-type(2) div {
+	left: 578px;
+}
+.selected_Obj li .basketBall {
+	top: 215px;
+	left: 626px;
+}
+
+/*중앙 그래프*/
+.centerGR {
+	display: inline-block;
+	width: 50px;
+	height: 433px;
+	background: url('../images/fall_centerGR.svg') no-repeat;
+	background-size: 100% auto; 
+	position: absolute;
+	top: 193px;
+	left: 486px;
+}
+.centerGR_text span {
+	font-size: 22px;
+	color: #3a3a3a;
+	position: absolute;
+}
+.centerGR_text .grText_20m {
+	top: 229px;
+    left: 434px;
+}
+.centerGR_text .grText_15m {
+	top: 324px;
+    left: 536px;
+}
+.centerGR_text .grText_10m {
+	top: 420px;
+    left: 434px;
+}
+.centerGR_text .grText_5m {
+	top: 514px;
+    left: 536px;
+}
+
+
+/**********그래프**************/
+.graphGroup {
+	width: 243px;
+	height: 237px;
+	position: absolute;
+	top: 340px;
+	left: 53px;
+}
+
+.graphGroup.rightGraph { left: 740px; }
+
+.graphBox {
+	background-color: #ffffff;
+	box-shadow: 1px 0px 4px 1px #727272;
+	border: 10px solid #fff;
+	box-sizing: border-box;
+	width: 100%;
+	height: 210px;
+	font-size: 15px;
+	overflow: hidden;
+}
+
+.graphBox > span, 
+.graphBox > ul {
+	position: absolute;
+}
+
+/*******************************/
+.trans_90 {
+	transform: rotate(90deg);
+}
+.trans_45 {
+	transform: rotate(45deg);
+}
+.mt-5 { margin-top: -5px; }
+.mt-9 { margin-top: -9px; }
+.mb-9 { margin-bottom: -9px; }
+/*******************************/
+
+.leftTitleText {
+	width: 17px;
+	top: 15px;
+	left: 10px;
+	text-align: center;
+}
+.leftNum {
+	top: -1px;
+	left: 28px;
+	text-align: right;
+}
+.leftNum li {
+	margin-top: 17px;
+}
+
+.rightTitleText {
+	bottom: 37px;
+	right: 8px;
+}
+.rightNum {
+	bottom: 58px;
+	right: 8px;
+}
+.rightNum li {
+	float: left;
+	margin-right: 15px;
+}
+.rightNum li:last-of-type {
+	margin-right: 0px;
+}
+
+/*그래프*/
+.graphBox table {
+	width: 217px;
+	height: 169px;
+	margin: -26px 0 0 41px;
+}
+.graphBox tbody {
+	display: block;
+	border: 2px solid #000;
+}
+.graphBox tbody td {
+	border: 1px solid #eee;
+	width: 41px;
+	height: 33px;
+}
+/*그래프 타이틀*/
+.graphTitleText {
+	font-size: 19px;
+	text-align: center;
+	margin-top: 6px;
+	color: #fff;
+}
+
+
+/*********플레이버튼*************/
+.underBar_Btn {
+	position: absolute;
+	bottom: 45px;
+	right: 380px;
+}
+.underBar_Btn li {
+	margin-right: 10px;
+	display: inline-block;
+	width: 71px;
+	height: 57px;
+	background-position-y: bottom; 
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+}
+
+.playBtn {
+	background-image: url('../images/cannon_playBtn.png');
+}
+.playBtn.on {
+	background-image: url('../images/cannon_ONplayBtn.png');
+}
+
+.stopBtn {
+	background-image: url('../images/cannon_stopBtn.png');
+}
+.stopBtn.on {
+	background-image: url('../images/cannon_ONstopBtn.png');
+}
+
+.replayBtn {
+	background-image: url('../images/cannon_replayBtn.png');
+}
+.replayBtn.on {
+	background-image: url('../images/cannon_ONreplayBtn.png');
+}

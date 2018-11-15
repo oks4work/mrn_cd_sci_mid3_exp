@@ -1,0 +1,298 @@
+@charset "utf-8";
+
+.contentsArea {
+	position: absolute;
+	top: 0px;
+	width: 1034px;
+	height: 780px;
+	font-size: 36px;
+	word-spacing: 1px;
+	letter-spacing: -1px;
+	font-family: NGothicEB;
+
+	background: url(../images/cannonEXPage.png) center no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+/*폭탄 이미지*/
+.cannonImg {
+	width: 150px;
+    position: absolute;
+    bottom: 151px;
+    left: 210px;
+}
+
+.cannonPoint_line {
+	position: absolute;
+	bottom: 340px;
+    left: 277px;
+	border: 1px dashed #262261;
+	display: inline-block;
+	height: 310px;
+}
+
+/*************폭탄*****************/
+.cannonPoint {
+	position: absolute;
+	top: 85px;
+    left: 261px;
+    z-index: 2;
+}
+.cannonPoint li:nth-of-type(1) img {
+	width: 36px;
+}
+.cannonPoint li:nth-of-type(2), 
+.cannonPoint li:nth-of-type(3), 
+.cannonPoint li:nth-of-type(4) {
+	margin-left: 4px;
+}
+
+.cannonPoint li {
+	margin-bottom: 47px;
+	font-size: 32px;
+	color: #ffffff;
+	text-shadow: 1px 1px 1px #aaaaaa;
+	z-index: 2;
+}
+.cannonPoint li span {
+	margin-right:8px;
+}
+
+/*포인트 동그라미 컬러*/
+.colorRound_WT {
+	background-color:#ffffff;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	margin: 5px;
+    box-shadow: -3px 3px 1px #5b5b5b;
+}
+.colorRound_GR,
+.colorRound_PK,
+.colorRound_OR {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+}
+.colorRound_GR {
+	background-color:#9cba5f;
+}
+.colorRound_PK {
+	background-color:#ff6971;
+}
+.colorRound_OR {
+	background-color:#ffa03b;
+}
+
+
+/***************그래프**************/
+.cannonGraph {
+    width: 330px;
+    height: 350px;
+	position: absolute;
+	top: 266px;
+	left: 650px;
+	color: #ffffff;
+}
+
+.graphTitleTxt {
+	background-color: #c8243f;
+    border-radius: 20px 20px 0 0;
+    padding: 6px 25px;
+	font-size: 27px;
+	text-shadow: 0px 1px 0px #aaaaaa;
+}
+.opacityBG {
+	background-color: #ffffff;
+	opacity: 0.8;
+}
+.graphContents,
+.opacityBG {
+	width: 100%;
+    height: 250px;
+	position: absolute;
+	border-top: 4px solid #c8243f;
+}
+
+.graphContents {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-evenly;
+}
+.graphContents .colorBar {
+    width: 50px;
+	font-size: 22px;
+	text-align: center;
+}
+.graphContents .colorBar div {
+	height: 31px;
+	line-height: 31px;
+}
+
+.graphContents .colorBar.purple {
+	background-color: #9b56e9;
+    height: 125px;
+}
+.graphContents .colorBar.purple div {
+	background-color: #7c3ac7;
+}
+
+.graphContents .colorBar.blue {
+	background-color: #39b5f7;
+    height: 184px;
+}
+.graphContents .colorBar.blue div {
+	background-color: #2d90c4;
+}
+
+.graphContents .colorBar.green {
+	background-color: #34a443;
+    height: 220px;
+}
+.graphContents .colorBar.green div {
+	background-color: #267831;
+}
+
+.graphContents .colorBar.pink {
+	background-color: #ed5aa2;
+    height: 125px;
+}
+.graphContents .colorBar.pink div {
+	background-color: #c24a84;
+}
+
+
+/*그래프 하단 텍스트*/
+.cannonGraph_text {
+    background-color: #2b2926;
+    width: 100%;
+    height: 56px;
+    position: absolute;
+    bottom: 0px;
+
+    display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+.cannonGraph_text li {
+    float: left;
+    font-size: 20px;
+    text-align: center;
+}
+.cannonGraph_text li:first-of-type {
+	margin-left: 9px;
+}
+
+/***********하단 바*****************/
+.underBar ul li {
+	float: left;
+}
+
+/*슬라이드 버튼*/
+.underBar_slideBtn {
+	position: absolute;
+	bottom: 30px;
+	left: 59px;
+}
+.underBar_slideBtn:nth-of-type(2) {
+	left: 350px;
+}
+/*슬라이드 바*/
+.slideBar {
+	background-color: #ddd;
+	width: 142px;
+	height: 20px;
+	border-radius: 50px;
+    border: 4px solid #ffffff;
+    box-shadow: inset 0px 1px 9px 1px #4c5052;
+}
+
+/*슬라이드 바 컬러*/
+.colorBar_Dgray { background-color: #4c5052; }
+.colorBar_red { background-color: #f70606; }
+.colorBar_Green { background-color: #60af04; }
+
+.underBar_slideBtn li:nth-of-type(2), .slideBar_btn div {
+	position: absolute;
+}
+
+/*슬라이드 바 버튼*/
+.slideBar_btn {
+	display: inline-block;
+	width: 72px;
+	height: 31px;
+	background: url('../images/cannon_slideBtn.png') no-repeat;
+	background-size: 100% auto;
+	position: absolute;
+	left: 40px;
+}
+.slideBar_btn div {
+	font-size: 19px;
+	color: #6d6d6d;
+    width: 100%;
+    line-height: 31px;
+    text-align: center;
+}
+/*슬라이드 숫자 박스*/
+.underBar_slideBtn .slideNumBox form .slideNumText {
+	background-color: #ffffff;
+	box-shadow: inset 1px 1px 4px 1px #c3c7c8;
+	width: 50px;
+	height: 25px;
+	position: absolute;
+    bottom: 3px;
+    left: 160px;
+}
+.underBar_slideBtn .numUnit {
+	color: #ffffff;
+    font-size: 27px;
+    margin-left: 7px;
+    position: absolute;
+    bottom: 1px;
+    left: 214px;
+}
+
+/*플레이버튼*/
+.underBar_Btn {
+	position: absolute;
+	bottom: 17px;
+	right: 65px;
+}
+.underBar_Btn li {
+	margin-right: 17px;
+	display: inline-block;
+	width: 71px;
+	height: 57px;
+	background-position-y: bottom; 
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+}
+
+.playBtn {
+	background-image: url('../images/cannon_playBtn.png');
+}
+.playBtn.on {
+	background-image: url('../images/cannon_ONplayBtn.png');
+}
+
+.stopBtn {
+	background-image: url('../images/cannon_stopBtn.png');
+}
+.stopBtn.on {
+	background-image: url('../images/cannon_ONstopBtn.png');
+}
+
+.replayBtn {
+	background-image: url('../images/cannon_replayBtn.png');
+}
+.replayBtn.on {
+	background-image: url('../images/cannon_ONreplayBtn.png');
+}
+
+
+.ls_2 { letter-spacing: -2px; }
+.ls_3 { letter-spacing: -3px; }
