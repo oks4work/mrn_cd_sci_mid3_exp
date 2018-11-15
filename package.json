@@ -1,0 +1,40 @@
+{
+  "name": "mrn_cd_sci_mid3_exp",
+  "version": "1.0.0",
+  "description": "Develop MiraeN CD SCI_MID3 Experiment page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo This is test.",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oks4work/mrn_cd_sci_mid3_exp.git"
+  },
+  "author": "OKS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oks4work/mrn_cd_sci_mid3_exp/issues"
+  },
+  "homepage": "https://github.com/oks4work/mrn_cd_sci_mid3_exp#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "^1.0.1",
+    "file-loader": "^2.0.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "npm": "^6.4.1"
+  }
+}
