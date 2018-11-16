@@ -1,11 +1,12 @@
-const path = require('path'),
-    CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
+
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    mode: 'production', // 'development': 개발, 'production': 생산(난독화)
+    mode: 'development', // 'development': 개발, 'production': 생산(난독화)
     entry: {
         cannon: ['babel-polyfill', './src/js/cannon'],
-        fall: ['babel-polyfill', './src/js/fall']
+        // fall: ['babel-polyfill', './src/js/fall']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -14,18 +15,26 @@ module.exports = {
     module: {
         rules: [{
             test: /\.js$/,
+            exclude: /node_modules/,
             loader: 'babel-loader',
             options: {
                 presets: [
-                    ['env', {
-                        targets: { node: 'current' } // 노드일 경우만
-                    }],
+                    ['env'],
                 ],
-            },
-            exclude: ['/node_modules'],
+            }
         }, {
             test: /\.less$/,
-            use: ['style-loader', 'css-loader', 'less-loader'],
+            use: [{
+                loader: 'style-loader' // creates style nodes from JS strings
+            }, {
+                loader: 'css-loader', options: { // translates CSS into CommonJS
+                    sourceMap: true
+                }
+            }, {
+                loader: 'less-loader', options: { // compiles Less to CSS
+                    sourceMap: true
+                }
+            }],
         }, {
             test: /\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             loader: 'url-loader',
@@ -35,14 +44,19 @@ module.exports = {
             }
         }],
     },
+    // Create Sourcemaps for the bundle
+    devtool: 'source-map',
+    devServer: {
+        contentBase: path.resolve(__dirname, 'build'),
+    },
     resolve: {
         modules: ['node_modules'],
-        extensions: ['.js', '.json', '.css'],
+        extensions: ['.js', '.json', '.css', 'less'],
     },
 
     plugins: [
         new CopyWebpackPlugin([
-            { from: './src/html/', to: '' }, // html 파일들
+            { from: './src/', to: '' }, // html 파일들
         ]),
     ]
 };
