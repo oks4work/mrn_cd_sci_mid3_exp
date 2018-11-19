@@ -1,0 +1,7 @@
+debug.log
+
+# webstorm 설정 파일
+.idea
+
+# node modules 폴더
+node_modules/
