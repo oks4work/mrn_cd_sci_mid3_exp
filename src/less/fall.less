@@ -130,15 +130,15 @@
 }
 
 /***********드론**************/
-.selected_Obj li div {
-	display: inline-block;
-	width: 140px;
-	height: 62px;
-	background: url('../images/fall_drone.png') no-repeat;
-	background-size: 100% auto;
-	position: absolute;
-	top: 174px;
-}
+//.selected_Obj li div {
+//	display: inline-block;
+//	width: 140px;
+//	height: 62px;
+//	background: url('../images/fall_drone.png') no-repeat;
+//	background-size: 100% auto;
+//	position: absolute;
+//	top: 174px;
+//}
 .selected_Obj li span {
 	background-size: 100% auto;
 	position: absolute;
@@ -216,28 +216,51 @@
 	overflow: hidden;
 }
 
-.graphBox > span, 
+.graphBox > span,
 .graphBox > ul {
 	position: absolute;
 }
 
 /*******************************/
-.trans_90 {
-	transform: rotate(90deg);
-}
-.trans_45 {
-	transform: rotate(45deg);
-}
-.mt-5 { margin-top: -5px; }
-.mt-9 { margin-top: -9px; }
-.mb-9 { margin-bottom: -9px; }
+//.trans_90 {
+//	.transform(rotate(90deg));
+//}
+//.trans_45 {
+//	.transform(rotate(45deg));
+//	//transform: rotate(45deg);
+//}
+//.mt-5 { margin-top: -5px; }
+//.mt-9 { margin-top: -9px; }
+//.mb-9 { margin-bottom: -9px; }
 /*******************************/
 
 .leftTitleText {
-	width: 17px;
+	position: absolute;
 	top: 15px;
-	left: 10px;
+	left: 8px;
+	width: 1em;
 	text-align: center;
+
+	> div:nth-child(2) {
+		margin-left: .1em;
+		.transform(rotate(90deg));
+	}
+	> div:nth-child(3) {
+		margin-top: -.7em;
+	}
+	> div:nth-child(4) {
+		margin-top: -.3em;
+		.transform(rotate(45deg));
+	}
+	> div:nth-child(5) {
+		margin-top: -.6em;
+	}
+	> div:nth-child(6){
+		margin-left: .1em;
+		margin-top: -.4em;
+		.transform(rotate(90deg));
+	}
+
 }
 .leftNum {
 	top: -1px;
@@ -265,20 +288,43 @@
 }
 
 /*그래프*/
-.graphBox table {
-	width: 217px;
-	height: 169px;
-	margin: -26px 0 0 41px;
+.graphBox {
+	.tableContainer {
+		position: absolute;
+		bottom: 75px;
+		left: 50px;
+		border: 2px solid black;
+		border-top-width: 0;
+		border-right-width: 0;
+		width: 43px * 4 + 10px;
+		height: 35px * 4 + 8px;
+		overflow: hidden;
+	}
+	table {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 43px * 5;
+		height: 35px * 5;
+		border-collapse: separate;
+	}
+
+	tbody {
+		//display: block;
+		//border: 2px solid #000;
+	}
+
+	td {
+		border: 1px solid #eee;
+		width: 41px;
+		height: 33px;
+	}
+
+	canvas {
+		position: absolute;
+	}
 }
-.graphBox tbody {
-	display: block;
-	border: 2px solid #000;
-}
-.graphBox tbody td {
-	border: 1px solid #eee;
-	width: 41px;
-	height: 33px;
-}
+
 /*그래프 타이틀*/
 .graphTitleText {
 	font-size: 19px;
@@ -291,36 +337,36 @@
 /*********플레이버튼*************/
 .underBar_Btn {
 	position: absolute;
+	display: flex;
+	justify-content: center;
+	right: 0;
 	bottom: 45px;
-	right: 380px;
-}
-.underBar_Btn li {
-	margin-right: 10px;
-	display: inline-block;
-	width: 71px;
-	height: 57px;
-	background-position-y: bottom; 
-	background-repeat: no-repeat;
-	background-size: 100% auto;
-}
+	left: 0;
 
-.playBtn {
-	background-image: url('../images/cannon_playBtn.png');
-}
-.playBtn.on {
-	background-image: url('../images/cannon_ONplayBtn.png');
-}
+	li {
+		display: inline-block;
+		width: @btn-width;
+		height: @btn-height;
+		margin: 0 5px;
+		background-image: url("@{btns-image}");
+		background-position-x: left;
+		background-size: @btn-width * 2 auto;
+		cursor: pointer;
 
-.stopBtn {
-	background-image: url('../images/cannon_stopBtn.png');
-}
-.stopBtn.on {
-	background-image: url('../images/cannon_ONstopBtn.png');
-}
+		&.on {
+			background-position-x: right;
+		}
 
-.replayBtn {
-	background-image: url('../images/cannon_replayBtn.png');
-}
-.replayBtn.on {
-	background-image: url('../images/cannon_ONreplayBtn.png');
+		&.playBtn {
+			background-position-y: top;
+		}
+
+		&.stopBtn {
+			background-position-y: center;
+		}
+
+		&.replayBtn {
+			background-position-y: bottom;
+		}
+	}
 }
