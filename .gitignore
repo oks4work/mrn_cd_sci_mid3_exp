@@ -6,3 +6,6 @@ cli_infos.txt
 
 # node modules 폴더
 node_modules/
+
+# 결과물 폴더
+dist/

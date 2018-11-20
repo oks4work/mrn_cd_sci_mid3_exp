@@ -1,5 +1,26 @@
 console.info(`□ cannon.js is loading...`);
 
+class DropMove {
+    constructor(HTMLelement) {
+        this.element = HTMLelement;
+        this.img = this.element.querySelector("img");
+    }
+
+    positioning(x, y) {
+        if (this.element.style.top !== y) {
+            this.element.style.top = `${y}px`;
+        }
+
+        if (this.element.style.left !== x) {
+            this.element.style.left = `${x}px`;
+        }
+    }
+
+    changeSrc(string) {
+        this.img.src = string;
+    }
+}
+
 // scale
 const scale = new $cale({
     target: $ts.getEl(".contentsArea")[0]
@@ -27,9 +48,31 @@ const dragdrop = new DragDrop({
     completeCallback: (dragObj, dropObj) => {
         dropCanvasInfo.selectedObjects[dropObj.answers - 1] = dropCanvasInfo.objectImgIndexing[dragObj.answers - 1];
 
+        dropMoves.changeSrcs();
         initDropCanvas();
     }
 });
+
+const dropMoves = {
+    objects: [],
+
+    move() {
+        this.objects[0].positioning(dropCanvasInfo.objectPos.left, dropCanvasInfo.objectPos.y);
+        this.objects[1].positioning(dropCanvasInfo.objectPos.right, dropCanvasInfo.objectPos.y);
+    },
+
+    changeSrcs() {
+        this.objects[0].changeSrc(dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[0]]);
+        this.objects[1].changeSrc(dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[1]]);
+    }
+};
+
+$ts.getEl(".dropMove").forEach((el) => {
+    dropMoves.objects.push(new DropMove(el));
+});
+
+dropMoves.move();
+dropMoves.changeSrcs();
 
 dragdrop.initialize();
 
@@ -178,16 +221,16 @@ function drawGraphs(count = 0) {
         // line 그리기
         ctx.beginPath();
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "e1435b";
+        ctx.strokeStyle = "#e1435b";
         ctx.moveTo(stdSize.width * (count - 1) * corrRatio, canvas.height - stdSize.height * (count - 1) * corrRatio);
         ctx.lineTo(stdSize.width * count * corrRatio, canvas.height - stdSize.height * count * corrRatio);
         ctx.stroke();
 
         // 원 그리기
-        ctx.beginPath();
-        ctx.arc(stdSize.width * count * corrRatio, canvas.height - stdSize.height * count * corrRatio, 2, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.stroke();
+        // ctx.beginPath();
+        // ctx.arc(stdSize.width * count * corrRatio, canvas.height - stdSize.height * count * corrRatio, 2, 0, 2 * Math.PI);
+        // ctx.fill();
+        // ctx.stroke();
     });
 }
 

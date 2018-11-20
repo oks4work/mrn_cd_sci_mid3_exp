@@ -26,10 +26,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         this.startTime = new Date().getTime();
         this.intervalID = window.setInterval(function () {
+          dropCanvasInfo.objectPos.y = dropCanvasInfo.objectPos.initial.y + _this.distance * _this.config.meterPixelRatio;
+          dropMoves.move();
+          clock.changeAll(_this.timePassed);
+
           if (_this.timePassedCorr >= _this.config.captureInterval * _this.count) {
             console.log("t: ".concat(_this.timePassedCorr / 1000, "s, v: ").concat(_this.velocity, "m/s, d: ").concat(_this.distance, "m, playback speed: ").concat(_this.config.playbackSpeed));
             drawGraphs(_this.count);
-            dropCanvasInfo.objectPos.y = dropCanvasInfo.objectPos.initial.y + _this.distance * _this.config.meterPixelRatio;
             drawObjects();
             _this.count++;
 
@@ -38,8 +41,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               stopBtn.click();
             }
           }
-
-          clock.changeAll(_this.timePassed);
         });
       }
     }, {
@@ -57,6 +58,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         initDropCanvas();
         initGraphCanvases();
         clock.reset();
+        dropMoves.move();
       } // 지난 시간
 
     }, {

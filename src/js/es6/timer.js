@@ -10,12 +10,16 @@
         startTimer() {
             this.startTime = new Date().getTime();
             this.intervalID = window.setInterval(() => {
+                dropCanvasInfo.objectPos.y = dropCanvasInfo.objectPos.initial.y + this.distance * this.config.meterPixelRatio;
+
+                dropMoves.move();
+
+                clock.changeAll(this.timePassed);
+
                 if (this.timePassedCorr >= this.config.captureInterval * this.count) {
                     console.log(`t: ${this.timePassedCorr / 1000}s, v: ${this.velocity}m/s, d: ${this.distance}m, playback speed: ${this.config.playbackSpeed}`);
 
                     drawGraphs(this.count);
-
-                    dropCanvasInfo.objectPos.y = dropCanvasInfo.objectPos.initial.y + this.distance * this.config.meterPixelRatio;
                     drawObjects();
 
                     this.count++;
@@ -25,8 +29,6 @@
                         stopBtn.click();
                     }
                 }
-
-                clock.changeAll(this.timePassed);
             });
         }
 
@@ -43,6 +45,8 @@
             initDropCanvas();
             initGraphCanvases();
             clock.reset();
+
+            dropMoves.move();
         }
 
         // 지난 시간

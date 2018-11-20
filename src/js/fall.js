@@ -1,6 +1,44 @@
 "use strict";
 
-console.info("\u25A1 cannon.js is loading..."); // scale
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+console.info("\u25A1 cannon.js is loading...");
+
+var DropMove =
+/*#__PURE__*/
+function () {
+  function DropMove(HTMLelement) {
+    _classCallCheck(this, DropMove);
+
+    this.element = HTMLelement;
+    this.img = this.element.querySelector("img");
+  }
+
+  _createClass(DropMove, [{
+    key: "positioning",
+    value: function positioning(x, y) {
+      if (this.element.style.top !== y) {
+        this.element.style.top = "".concat(y, "px");
+      }
+
+      if (this.element.style.left !== x) {
+        this.element.style.left = "".concat(x, "px");
+      }
+    }
+  }, {
+    key: "changeSrc",
+    value: function changeSrc(string) {
+      this.img.src = string;
+    }
+  }]);
+
+  return DropMove;
+}(); // scale
+
 
 var scale = new $cale({
   target: $ts.getEl(".contentsArea")[0]
@@ -23,9 +61,26 @@ var dragdrop = new DragDrop({
   dropAreaElements: $ts.getEl(".dropArea"),
   completeCallback: function completeCallback(dragObj, dropObj) {
     dropCanvasInfo.selectedObjects[dropObj.answers - 1] = dropCanvasInfo.objectImgIndexing[dragObj.answers - 1];
+    dropMoves.changeSrcs();
     initDropCanvas();
   }
 });
+var dropMoves = {
+  objects: [],
+  move: function move() {
+    this.objects[0].positioning(dropCanvasInfo.objectPos.left, dropCanvasInfo.objectPos.y);
+    this.objects[1].positioning(dropCanvasInfo.objectPos.right, dropCanvasInfo.objectPos.y);
+  },
+  changeSrcs: function changeSrcs() {
+    this.objects[0].changeSrc(dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[0]]);
+    this.objects[1].changeSrc(dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[1]]);
+  }
+};
+$ts.getEl(".dropMove").forEach(function (el) {
+  dropMoves.objects.push(new DropMove(el));
+});
+dropMoves.move();
+dropMoves.changeSrcs();
 dragdrop.initialize();
 initDropCanvas();
 initGraphCanvases();
@@ -149,15 +204,14 @@ function drawGraphs() {
 
     ctx.beginPath();
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "e1435b";
+    ctx.strokeStyle = "#e1435b";
     ctx.moveTo(stdSize.width * (count - 1) * corrRatio, canvas.height - stdSize.height * (count - 1) * corrRatio);
     ctx.lineTo(stdSize.width * count * corrRatio, canvas.height - stdSize.height * count * corrRatio);
     ctx.stroke(); // 원 그리기
-
-    ctx.beginPath();
-    ctx.arc(stdSize.width * count * corrRatio, canvas.height - stdSize.height * count * corrRatio, 2, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
+    // ctx.beginPath();
+    // ctx.arc(stdSize.width * count * corrRatio, canvas.height - stdSize.height * count * corrRatio, 2, 0, 2 * Math.PI);
+    // ctx.fill();
+    // ctx.stroke();
   });
 } // event 추가하기
 
