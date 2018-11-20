@@ -14,6 +14,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _classCallCheck(this, ClickToggleClass);
 
       this.element = HTMLelement;
+      this.element.object = this;
       this.toggleClassName = className;
       this.callbacks = {
         click: callbacks && callbacks.click || null,
@@ -38,7 +39,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       key: "clickEventHandler",
       value: function clickEventHandler() {
-        if (this.element.classList.contains(this.toggleClassName)) {
+        if (this.isOn) {
           this.off();
 
           if (this.callbacks.off) {
@@ -61,6 +62,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "off",
       value: function off() {
         this.element.classList.remove(this.toggleClassName);
+      }
+    }, {
+      key: "isOn",
+      get: function get() {
+        return this.element.classList.contains(this.toggleClassName);
       }
     }]);
 

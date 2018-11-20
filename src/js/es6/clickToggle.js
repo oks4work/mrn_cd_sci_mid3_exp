@@ -2,6 +2,7 @@
     class ClickToggleClass {
         constructor(HTMLelement, className, callbacks) {
             this.element = HTMLelement;
+            this.element.object = this;
             this.toggleClassName = className;
             this.callbacks = {
                 click: callbacks && callbacks.click || null,
@@ -20,7 +21,7 @@
         }
 
         clickEventHandler() {
-            if (this.element.classList.contains(this.toggleClassName)) {
+            if (this.isOn) {
                 this.off();
                 if (this.callbacks.off) {
                     this.callbacks.off();
@@ -39,6 +40,10 @@
 
         off() {
             this.element.classList.remove(this.toggleClassName);
+        }
+
+        get isOn() {
+            return this.element.classList.contains(this.toggleClassName);
         }
     }
 

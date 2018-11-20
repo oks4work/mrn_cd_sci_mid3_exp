@@ -3,6 +3,9 @@
 @import "font.less";
 @import "common.less";
 
+/**************************************
+*			   fall.less              *
+**************************************/
 .contentsArea {
 	position: absolute;
 	top: 0px;
@@ -13,31 +16,48 @@
 	letter-spacing: -1px;
 	font-family: NGothicEB;
 
-	background: url(../images/fallEXPage.png) center no-repeat;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+	background: url(../images/fallEXPage.png) center / cover no-repeat;
 }
 
 
 .fallTimer {
-	padding: 0px 5px;
-	background-color: #495c63;
-	border: 3px solid #ffffff;
-	border-radius: 6px;
+	display: flex;
+	align-items: flex-end;
 	position: absolute;
 	top: 44px;
 	left: 47px;
+	border: 3px solid #ffffff;
+	border-radius: 6px;
+	background-color: #495c63;
+	width: 127px;
+	padding: 0px 5px;
 	text-align: center;
 	font-size: 25px;
+	line-height: 1;
 	color: #aaa;
+
+	.DIGIB {
+		font-size: 46px;
+		color: #fff;
+	}
+
+	.sec_txt {
+		margin: 0 .1em .2em .2em;
+	}
+
+	.fixed {
+		display: flex;
+		width: 46px;
+		flex-shrink: 0;
+
+		> span {
+			width: 50%;
+			flex-shrink: 0;
+			text-align: right;
+		}
+	}
 }
-.DIGIB {
-	font-size: 46px;
-	color: #fff;
-	display: inline-block;
-}
+
 
 /******여러 가지 물체 박스**********/
 .opacityBG, 
@@ -72,73 +92,63 @@
 	color: #ffffff;
 }
 
-.selectObjImg li {
-	display: inline-block;
-	background-repeat: no-repeat;
-	background-size: 100% auto;
+.dragObj {
 	position: absolute;
-}
+	background: center no-repeat;
+	height: 47px;
+	cursor: pointer;
 
-.soccerBall {
-	width: 46px;
-	height: 46px;
-	background: url('../images/fall_soccerBall.png');
-	left: 32px;
-	top: 25px;
-}
-.basketBall {
-	width: 46px;
-	height: 46px;
-	background: url('../images/fall_basketBall.png');
-	left: 99px;
-	top: 25px;
-}
-.baseBall {
-	width: 34px;
-	height: 34px;
-	background: url('../images/fall_baseBall.png');
-	left: 168px;
-	top: 30px;
-}
-.feather {
-	width: 61px;
-	height: 40px;
-	background: url('../images/fall_feather.png');
-	left: 216px;
-	top: 25px;
-}
-.pumpkin {
-	width: 47px;
-	height: 47px;
-	background: url('../images/fall_pumpkin.png');
-	left: 293px;
-	top: 25px;
-}
-.car {
-	width: 92px;
-	height: 47px;
-	background: url('../images/fall_car.png');
-	left: 360px;
-	top: 34px;
-}
-.piano {
-	width: 58px;
-	height: 47px;
-	background: url('../images/fall_piano.png');
-	left: 470px;
-	top: 22px;
+	&.soccerBall {
+		top: 74px;
+		left: 450px;
+		width: 46px;
+		background-image: url('../images/fall_soccerBall.png');
+	}
+	&.basketBall {
+		top: 74px;
+		left: 99px + 427px;
+		width: 46px;
+		background-image: url('../images/fall_basketBall.png');
+	}
+	&.baseBall {
+		top: 74px;
+		left: 600px;
+		width: 34px;
+		background-image: url('../images/fall_baseBall.png');
+	}
+	&.feather {
+		top: 74px;
+		left: 216px + 427px;
+		width: 61px;
+		background-image: url('../images/fall_feather.png');
+	}
+	&.pumpkin {
+		top: 74px;
+		left: 293px + 427px;
+		width: 47px;
+		background-image: url('../images/fall_pumpkin.png');
+	}
+	&.car {
+		top: 74px;
+		left: 360px + 427px;
+		width: 92px;
+		background-image: url('../images/fall_car.png');
+	}
+	&.piano {
+		top: 74px;
+		left: 470px + 427px;
+		width: 58px;
+		background-image: url('../images/fall_piano.png');
+	}
+
+	&.disabled {
+		opacity: .5;
+		cursor: default;
+		pointer-events: none;
+	}
 }
 
 /***********드론**************/
-//.selected_Obj li div {
-//	display: inline-block;
-//	width: 140px;
-//	height: 62px;
-//	background: url('../images/fall_drone.png') no-repeat;
-//	background-size: 100% auto;
-//	position: absolute;
-//	top: 174px;
-//}
 .selected_Obj li span {
 	background-size: 100% auto;
 	position: absolute;
@@ -220,20 +230,6 @@
 .graphBox > ul {
 	position: absolute;
 }
-
-/*******************************/
-//.trans_90 {
-//	.transform(rotate(90deg));
-//}
-//.trans_45 {
-//	.transform(rotate(45deg));
-//	//transform: rotate(45deg);
-//}
-//.mt-5 { margin-top: -5px; }
-//.mt-9 { margin-top: -9px; }
-//.mb-9 { margin-bottom: -9px; }
-/*******************************/
-
 .leftTitleText {
 	position: absolute;
 	top: 15px;
@@ -355,6 +351,8 @@
 
 		&.on {
 			background-position-x: right;
+			cursor: pointer;
+			pointer-events: none;
 		}
 
 		&.playBtn {
@@ -367,6 +365,27 @@
 
 		&.replayBtn {
 			background-position-y: bottom;
+		}
+	}
+}
+
+.dropAreaContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	.dropArea {
+		position: absolute;
+		top: 160px;
+		width: 170px;
+		height: 120px;
+		//background-color: rgba(0, 0, 0, .1);
+
+		&:nth-child(1) {
+			left: 300px;
+		}
+		&:nth-child(2) {
+			left: 560px;
 		}
 	}
 }

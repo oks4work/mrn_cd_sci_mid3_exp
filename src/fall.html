@@ -5,30 +5,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scalable=0">
-    <link rel="stylesheet/less" href="less/fall.less" type="text/css"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js"></script>
-    <!--<link rel="stylesheet" href="css/fall.css" type="text/css" />-->
+    <!--<link rel="stylesheet/less" href="less/fall.less" type="text/css"/>-->
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js"></script>-->
+    <link rel="stylesheet" href="css/fall.css" type="text/css" />
     <title></title>
 </head>
 
 <body>
 
-<div class="contentsArea">
+<div class="contentsArea" data-drag-drop-option="noComplete">
     <canvas id="dropDown" width="1034" height="780"></canvas>
-    <span class="fallTimer"><div class="DIGIB">00.00</div> 초</span>
+    <div class="fallTimer">
+        <div id="digital_sec" class="DIGIB fixed"><span>0</span><span>0</span></div>
+        <div class="DIGIB">.</div>
+        <div id="digital_ms" class="DIGIB fixed"><span>0</span><span>0</span></div>
+        <div class="sec_txt">초</div>
+    </div>
     <div class="opacityBG"></div>
     <div class="selectObjBox">
         <p>여러 가지 물체</p>
         <ul class="selectObjImg">
-            <li class="soccerBall"></li>
-            <li class="basketBall"></li>
-            <li class="baseBall"></li>
-            <li class="feather"></li>
-            <li class="pumpkin"></li>
-            <li class="car"></li>
-            <li class="piano"></li>
+
         </ul>
     </div>
+    <ul class="dragObjContainer">
+        <li class="dragObj soccerBall" data-drag-drop-answer="1"></li>
+        <li class="dragObj basketBall" data-drag-drop-answer="2"></li>
+        <li class="dragObj baseBall" data-drag-drop-answer="3"></li>
+        <li class="dragObj feather" data-drag-drop-answer="4"></li>
+        <li class="dragObj pumpkin" data-drag-drop-answer="5"></li>
+        <li class="dragObj car" data-drag-drop-answer="6"></li>
+        <li class="dragObj piano" data-drag-drop-answer="7"></li>
+    </ul>
+    <ul class="dropAreaContainer">
+        <li class="dropArea" data-drag-drop-answer="1"></li>
+        <li class="dropArea" data-drag-drop-answer="2"></li>
+    </ul>
     <!--<ul class="selected_Obj">-->
     <!--<li>-->
     <!--<span class="baseBall"></span>-->
@@ -186,8 +198,8 @@
     </div>
     <ul class="underBar_Btn">
         <li class="playBtn"></li>
-        <li class="stopBtn"></li>
-        <li class="replayBtn"></li>
+        <li class="stopBtn on"></li>
+        <li class="replayBtn on"></li>
     </ul>
 </div>
 
@@ -195,6 +207,8 @@
 <script type="text/javascript" src="js/$ts.js"></script>
 <script type="text/javascript" src="js/clickToggle.js"></script>
 <script type="text/javascript" src="js/timer.js"></script>
+<script type="text/javascript" src="js/digitalClock.js"></script>
+<script type="text/javascript" src="js/dragdrop.js"></script>
 <script type="text/javascript" src="js/fall.js"></script>
 <script type="text/javascript">
 
