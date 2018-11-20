@@ -1,6 +1,10 @@
 "use strict";
 
-console.info("\u25A1 cannon.js is loading..."); // timer
+console.info("\u25A1 cannon.js is loading..."); // scale
+
+var scale = new $cale({
+  target: $ts.getEl(".contentsArea")[0]
+}); // timer
 
 var timer = new Timer(timerConfig); // digital clock
 
@@ -85,8 +89,7 @@ function drawObjects() {
 
 
 function disableSelectedObjects() {
-  var dragObjs;
-  dragObjs = $ts.getEl(".dragObj");
+  var dragObjs = $ts.getEl(".dragObj");
   dragObjs.forEach(function (dragObj) {
     dragObj.classList.remove("disabled");
     dragObj.dataset.dragElement = "";
@@ -100,6 +103,13 @@ function disableSelectedObjects() {
         dragObj.dataset.dragElement = "complete";
       }
     });
+  });
+} // 모든 오브젝트 비활성화하기
+
+
+function disableAllObjects() {
+  $ts.getEl(".dragObj").forEach(function (dragObj) {
+    dragObj.dataset.dragElement = "complete";
   });
 } // drop canvas get
 
@@ -139,6 +149,7 @@ function drawGraphs() {
 
     ctx.beginPath();
     ctx.lineWidth = 2;
+    ctx.strokeStyle = "e1435b";
     ctx.moveTo(stdSize.width * (count - 1) * corrRatio, canvas.height - stdSize.height * (count - 1) * corrRatio);
     ctx.lineTo(stdSize.width * count * corrRatio, canvas.height - stdSize.height * count * corrRatio);
     ctx.stroke(); // 원 그리기
@@ -157,11 +168,12 @@ function addEvents() {
       timer.startTimer();
       stopBtn.click();
       replayBtn.click();
+      disableAllObjects();
     }
   }).addEvent();
   new ClickToggleClass(stopBtn, "on", {
     on: function on() {
-      timer.pauseTimer(); // replayBtn.click();
+      timer.pauseTimer();
     },
     off: function off() {}
   }).addEvent();
@@ -173,6 +185,8 @@ function addEvents() {
       if (!stopBtn.object.isOn) {
         stopBtn.click();
       }
+
+      disableSelectedObjects();
     },
     off: function off() {}
   }).addEvent();

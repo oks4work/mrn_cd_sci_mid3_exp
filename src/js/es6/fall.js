@@ -1,5 +1,10 @@
 console.info(`□ cannon.js is loading...`);
 
+// scale
+const scale = new $cale({
+    target: $ts.getEl(".contentsArea")[0]
+});
+
 // timer
 const timer = new Timer(timerConfig);
 
@@ -103,9 +108,7 @@ function drawObjects() {
 
 // 선택된 오브젝트 비활성화하기
 function disableSelectedObjects() {
-    let dragObjs;
-
-    dragObjs = $ts.getEl(".dragObj");
+    let dragObjs = $ts.getEl(".dragObj");
 
     dragObjs.forEach((dragObj) => {
         dragObj.classList.remove("disabled");
@@ -123,6 +126,13 @@ function disableSelectedObjects() {
                 dragObj.dataset.dragElement = "complete";
             }
         });
+    });
+}
+
+// 모든 오브젝트 비활성화하기
+function disableAllObjects() {
+    $ts.getEl(".dragObj").forEach((dragObj) => {
+        dragObj.dataset.dragElement = "complete";
     });
 }
 
@@ -168,6 +178,7 @@ function drawGraphs(count = 0) {
         // line 그리기
         ctx.beginPath();
         ctx.lineWidth = 2;
+        ctx.strokeStyle = "e1435b";
         ctx.moveTo(stdSize.width * (count - 1) * corrRatio, canvas.height - stdSize.height * (count - 1) * corrRatio);
         ctx.lineTo(stdSize.width * count * corrRatio, canvas.height - stdSize.height * count * corrRatio);
         ctx.stroke();
@@ -187,12 +198,12 @@ function addEvents() {
             timer.startTimer();
             stopBtn.click();
             replayBtn.click();
+            disableAllObjects();
         }
     }).addEvent();
     new ClickToggleClass(stopBtn, "on", {
         on: () => {
             timer.pauseTimer();
-            // replayBtn.click();
         },
         off: () => {
         }
@@ -204,6 +215,8 @@ function addEvents() {
             if (!stopBtn.object.isOn) {
                 stopBtn.click();
             }
+
+            disableSelectedObjects();
         },
         off: () => {
 

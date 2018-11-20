@@ -75,14 +75,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "velocity",
       get: function get() {
         // 속도 = 중력가속도 * 시간
-        return this.config.graAcc * 10 * this.timePassedCorr / (this.config.timeToVeConst * 10);
+        return this.config.graAcc * 10 * this.timePassed / (this.config.timeToVeConst * 10);
       } // 거리
 
     }, {
       key: "distance",
       get: function get() {
         // 거리 = 중력가속도 * 속도의 제곱 / 2
-        var result = this.config.graAcc * 10 * Math.pow(this.timePassedCorr / this.config.timeToVeConst, 2) / 20;
+        var result = this.config.graAcc * 10 * Math.pow(this.timePassed / this.config.timeToVeConst, 2) / 20;
         result = Math.round(result * 100) / 100;
         return result;
       }
