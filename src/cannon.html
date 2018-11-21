@@ -14,13 +14,13 @@
 
 		<div class="contentsArea">
 			<ul class="cannonPoint">
-				<li><img src="images/colorRound_top.png"></li>
+				<li><img src="images/cannon/colorRound_top.png"></li>
 				<li><span class="dispaly_IB colorRound_GR"><div class="colorRound_WT"></div></span>C</li>
 				<li><span class="dispaly_IB colorRound_PK"><div class="colorRound_WT"></div></span>B</li>
 				<li><span class="dispaly_IB colorRound_OR"><div class="colorRound_WT"></div></span>A</li>
 			</ul>
 			<span class="cannonPoint_line"></span>
-			<img src="images/cannonIMG.png" class="cannonImg">
+			<img src="images/cannon/cannonIMG.png" class="cannonImg">
 			<div class="cannonGraph">
 				<span class="graphTitleTxt ls_3">A 지점</span>
 				<div class="opacityBG"></div>
@@ -46,26 +46,22 @@
 				</ul>
 			</div>
 			<div class="underBar">
-				<ul class="underBar_slideBtn">
-					<li class="slideBar colorBar_red"></li>
-					<li><span class="slideBar_btn"><div>속 력</div></span></li>
-					<li class="slideNumBox">
-						<form>
-							<input type="text" name="numText" class="slideNumText">
-						</form>
-					</li>
-					<li class="numUnit NMyeongjoEB">m/s</li>
-				</ul>
-				<ul class="underBar_slideBtn">
-					<li class="slideBar colorBar_Green"></li>
-					<li><span class="slideBar_btn"><div>질 량</div></span></li>
-					<li class="slideNumBox">
-						<form>
-							<input type="text" name="numText" class="slideNumText">
-						</form>
-					</li>
-					<li class="numUnit NMyeongjoEB">kg</li>
-				</ul>
+				<div class="rangeInputContainer">
+					<input type="range" id="rangeInput_velocity" />
+				</div>
+
+				<div class="numberInputContainer">
+					<input type="number" id="textInput_velocity" />
+					<div class="numberInputContainer_unit"></div>
+				</div>
+
+				<div class="rangeInputContainer">
+					<input type="range" id="rangeInput_mass" />
+				</div>
+				<div class="numberInputContainer">
+					<input type="number" id="textInput_mass" />
+					<div class="numberInputContainer_unit"></div>
+				</div>
 				<ul class="underBar_Btn">
 					<li class="playBtn"></li>
 					<li class="stopBtn"></li>
@@ -73,8 +69,7 @@
 				</ul>
 			</div>
 		</div>
-		<script type="text/javascript" src="js/es6/cannon.js"></script>
-		<!--<script type="text/javascript" src="js/cannon.js"></script>-->
+		<script type="text/javascript" src="js/cannon.js"></script>
 		<script type="text/javascript">
 
 			document.addEventListener('DOMContentLoaded', function () {

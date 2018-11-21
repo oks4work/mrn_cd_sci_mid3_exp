@@ -1,0 +1,231 @@
+@thumb-width: 69px;
+@thumb-height: 30px;
+@thumb-image: "../images/cannon/rangeSliderthumb";
+
+@track-height: 24px;
+@track-radius: 30px;
+@track-border: 3px solid white;
+@track-bg-color-velocity: #f70606;
+@track-bg-color-mass: #60af04;
+@track-shadow: inset 0 0 0 3px white;
+
+.thumb() {
+  position: relative;
+  width: @thumb-width;
+  height: @thumb-height;
+  border: none;
+  background: center / cover no-repeat;
+  cursor: pointer;
+}
+
+.thumb-bg() {
+  &#rangeInput_velocity::-webkit-slider-thumb {
+    background-image:url("@{thumb-image}_velocity.png");
+  }
+  &#rangeInput_velocity::-moz-range-thumb {
+    background-image:url("@{thumb-image}_velocity.png");
+  }
+  &#rangeInput_velocity::-ms-thumb {
+    background-image:url("@{thumb-image}_velocity.png");
+  }
+  &#rangeInput_mass::-webkit-slider-thumb {
+    background-image:url("@{thumb-image}_mass.png");
+  }
+  &#rangeInput_mass::-moz-range-thumb {
+    background-image:url("@{thumb-image}_mass.png");
+  }
+  &#rangeInput_mass::-ms-thumb {
+    background-image:url("@{thumb-image}_mass.png");
+  }
+}
+
+.track() {
+  width: 100%;
+  height: @track-height;
+  border: @track-border;
+  border-radius: @track-radius;
+  //background: @track-bg-color-velocity;
+  //box-shadow: @track-shadow;
+  cursor: pointer;
+}
+
+.track-bg() {
+  &#rangeInput_velocity::-webkit-slider-runnable-track {
+    background-color: @track-bg-color-velocity;
+  }
+  &#rangeInput_velocity::-webkit-slider-runnable-track {
+    background-color: @track-bg-color-velocity;
+  }
+  &#rangeInput_velocity::-moz-range-track {
+    background-color: @track-bg-color-velocity;
+  }
+  &#rangeInput_velocity::-ms-track {
+    //background-color: @track-bg-color-velocity;
+  }
+  &#rangeInput_velocity::-ms-fill-lower {
+    background-color: @track-bg-color-velocity;
+  }
+  &#rangeInput_velocity:focus::-ms-fill-lower {
+    background-color: @track-bg-color-velocity;
+  }
+  &#rangeInput_velocity::-ms-fill-upper {
+    background-color: @track-bg-color-velocity;
+  }
+  &#rangeInput_velocity:focus::-ms-fill-upper {
+    background-color: @track-bg-color-velocity;
+  }
+  &#rangeInput_mass::-webkit-slider-runnable-track {
+    background-color: @track-bg-color-mass;
+  }
+  &#rangeInput_mass::-webkit-slider-runnable-track {
+    background-color: @track-bg-color-mass;
+  }
+  &#rangeInput_mass::-moz-range-track {
+    background-color: @track-bg-color-mass;
+  }
+  &#rangeInput_mass::-ms-track {
+    //background-color: @track-bg-color-mass;
+  }
+  &#rangeInput_mass::-ms-fill-lower {
+    background-color: @track-bg-color-mass;
+  }
+  &#rangeInput_mass:focus::-ms-fill-lower {
+    background-color: @track-bg-color-mass;
+  }
+  &#rangeInput_mass::-ms-fill-upper {
+    background-color: @track-bg-color-mass;
+  }
+  &#rangeInput_mass:focus::-ms-fill-upper {
+    background-color: @track-bg-color-mass;
+  }
+}
+
+/* input 기본 스타일 초기화 */
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+
+input[type=range] {
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+
+  &:focus {
+    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  }
+
+  &::-ms-track {
+    width: 100%;
+    cursor: pointer;
+
+    /* Hides the slider so custom styles can be added */
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  /* Special styling for WebKit/Blink */
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    margin-top: -5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    .thumb();
+  }
+
+  /* All the same stuff for Firefox */
+  &::-moz-range-thumb {
+    .thumb();
+  }
+
+  /* All the same stuff for IE */
+  &::-ms-thumb {
+    .thumb();
+  }
+
+  .thumb-bg();
+
+  &::-webkit-slider-runnable-track {
+    .track();
+  }
+
+  &:focus::-webkit-slider-runnable-track {
+    background: @track-bg-color-velocity;
+  }
+
+  &::-moz-range-track {
+    .track();
+  }
+
+  &::-ms-track {
+    width: calc(100% - 6px);
+    height: @track-height;
+    cursor: pointer;
+    background: transparent;
+    //border-color: white;
+    //border-color: #b59692;
+    border-color: transparent;
+    border-radius: @track-radius;
+    border-width: 3px 0;
+    //border-width: 0;
+    color: transparent;
+  }
+  .ms-track() {
+    height: @track-height;
+    //border-color: white;
+    border-radius: @track-radius;
+    background: @track-bg-color-velocity;
+    box-shadow: @track-shadow;
+  }
+  &::-ms-fill-lower {
+    .ms-track();
+  }
+  //&:focus::-ms-fill-lower {
+  //  //background: @track-bg-color-velocity;
+  //}
+  &::-ms-fill-upper {
+    .ms-track();
+  }
+  //&:focus::-ms-fill-upper {
+  //  background: @track-bg-color-velocity;
+  //}
+
+  .track-bg();
+}
+
+@number-input-bg-image: "../images/cannon/numberInputBg.png";
+@number-input-unit-image: "../images/cannon/numberInputUnits.png";
+@number-input-unit-width: 39px;
+@number-input-unit-height: 52px;
+
+/* text input 초기화 */
+input[type=number] {
+  height: auto;
+  line-height: normal; /* line-height 초기화 */
+  padding: 0; /* 여백 설정 */
+  border-radius: 0;  /* iSO 둥근모서리 제거 */
+  border: 0;
+  outline-style: none;  /* 포커스시 발생하는 효과 제거를 원한다면 */
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button { /* input type number 에서 화살표 제거 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  .numberInputContainer & {
+    box-sizing: border-box;
+    width: 54px;
+    height: 29px;
+    background: url("@{number-input-bg-image}") center / cover no-repeat;
+  }
+}
+
+/* input type number 에서 화살표 제거 */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
