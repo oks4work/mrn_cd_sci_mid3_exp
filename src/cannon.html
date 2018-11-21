@@ -21,9 +21,12 @@
 			</ul>
 			<span class="cannonPoint_line"></span>
 			<img src="images/cannon/cannonIMG.png" class="cannonImg">
+			<div class="cannonArea">
+				<img id="cannonball" class="cannonball" src="images/cannon/colorRound_top.png" alt="" />
+			</div>
 			<div class="cannonGraph">
-				<span class="graphTitleTxt ls_3">A 지점</span>
-				<div class="opacityBG"></div>
+				<div class="graphTitleTxt"><p>A 지점</p></div>
+				<div class="graphTitleLine"></div>
 				<ul class="graphContents">
 					<li class="colorBar purple">
 						<div>47 <span class="NMyeongjoEB">m</span></div>
@@ -51,24 +54,30 @@
 				</div>
 
 				<div class="numberInputContainer">
-					<input type="number" id="textInput_velocity" />
+					<input type="number" id="numberInput_velocity" min="10" max="20" step="1" value="15" />
 					<div class="numberInputContainer_unit"></div>
 				</div>
 
 				<div class="rangeInputContainer">
-					<input type="range" id="rangeInput_mass" />
+					<input type="range" id="rangeInput_mass" min="1" max="11" step="1" value="6" />
 				</div>
 				<div class="numberInputContainer">
-					<input type="number" id="textInput_mass" />
+					<input type="number" id="numberInput_mass" min="1" max="11" step="1" value="6" />
 					<div class="numberInputContainer_unit"></div>
 				</div>
 				<ul class="underBar_Btn">
 					<li class="playBtn"></li>
-					<li class="stopBtn"></li>
+					<li class="stopBtn on"></li>
 					<li class="replayBtn on"></li>
 				</ul>
 			</div>
 		</div>
+		<script type="text/javascript" src="js/$ts.js"></script>
+		<script type="text/javascript" src="js/cannon_config.js"></script>
+		<script type="text/javascript" src="js/efSound.js"></script>
+		<script type="text/javascript" src="js/clickToggle.js"></script>
+		<script type="text/javascript" src="js/inputConn.js"></script>
+		<script type="text/javascript" src="js/cannonTimer.js"></script>
 		<script type="text/javascript" src="js/cannon.js"></script>
 		<script type="text/javascript">
 

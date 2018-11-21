@@ -107,22 +107,25 @@
 }
 
 .graphTitleTxt {
+	& > p {
+		display: inline-block;
+		background-color: #c8243f;
+		border-radius: 20px 20px 0 0;
+		padding: 6px 25px;
+		font-size: 27px;
+		text-shadow: 0px 1px 0px #aaaaaa;
+	}
+}
+.graphTitleLine {
+	height: 4px;
 	background-color: #c8243f;
-    border-radius: 20px 20px 0 0;
-    padding: 6px 25px;
-	font-size: 27px;
-	text-shadow: 0px 1px 0px #aaaaaa;
 }
-.opacityBG {
-	background-color: #ffffff;
-	opacity: 0.8;
-}
-.graphContents,
-.opacityBG {
+.graphContents {
 	width: 100%;
     height: 250px;
 	position: absolute;
-	border-top: 4px solid #c8243f;
+	background: rgba(255, 255, 255, .8);
+	//border-top: 4px solid #c8243f;
 }
 
 .graphContents {
@@ -230,10 +233,10 @@
 	margin-left: 10px;
 	background: url("@{number-input-unit-image}") left top / @number-input-unit-width auto no-repeat;
 
-	#textInput_velocity ~ & {
+	#numberInput_velocity ~ & {
 		background-position-y: top;
 	}
-	#textInput_mass ~ & {
+	#numberInput_mass ~ & {
 		background-position-y: bottom;
 	}
 }
@@ -271,4 +274,21 @@
 			background-position-y: bottom;
 		}
 	}
+}
+
+.cannonArea {
+	position: absolute;
+	bottom: 305px;
+	left: 255px;
+	width: 45px;
+	height: 470px;
+	border-radius: 15px;
+	background-color: rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.cannonball {
+	position: absolute;
+	bottom: -36px;
+	left: 4px;
 }
