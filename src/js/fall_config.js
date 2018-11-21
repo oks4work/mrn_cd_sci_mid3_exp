@@ -3,7 +3,7 @@ const dropCanvasInfo = {
     dropHeight: 380, // drop 영역 height
     dropMeter: 20, // drop 영역 meter
 
-    droneImgSrc: "images/fall_drone.png", // 드론 이미지
+    droneImgSrc: "images/fall/fall_drone.png", // 드론 이미지
     dronePos: { // 드론 위치
         y: 174,
         left: 318,
@@ -21,13 +21,13 @@ const dropCanvasInfo = {
         right: 649
     },
     objectImgs: { // 오브젝트 이미지 경로
-        football: "images/fall_soccerBall.png",
-        basketball: "images/fall_basketBall.png",
-        baseball: "images/fall_baseBall.png",
-        feather: "images/fall_feather.png",
-        pumpkin: "images/fall_pumpkin.png",
-        car: "images/fall_car.png",
-        piano: "images/fall_piano.png"
+        football: "images/fall/fall_soccerBall.png",
+        basketball: "images/fall/fall_basketBall.png",
+        baseball: "images/fall/fall_baseBall.png",
+        feather: "images/fall/fall_feather.png",
+        pumpkin: "images/fall/fall_pumpkin.png",
+        car: "images/fall/fall_car.png",
+        piano: "images/fall/fall_piano.png"
     },
     objectImgIndexing: [ // 오브젝트 이미지 인덱싱
         "football",     // 1
