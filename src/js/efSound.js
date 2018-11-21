@@ -12,7 +12,6 @@ function () {
   function EffectSound(containerElement) {
     _classCallCheck(this, EffectSound);
 
-    console.log(containerElement);
     this.container = containerElement;
     this.audio = document.createElement("audio");
     this.intervalID = 0;
@@ -53,7 +52,7 @@ function () {
     }
   }], [{
     key: "intervalFn",
-    value: function intervalFn(e) {
+    value: function intervalFn() {
       var audio = EffectSound.audio;
 
       if (audio.readyState) {

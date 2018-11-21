@@ -1,11 +1,11 @@
 class EffectSound {
-    constructor(containerElement) { console.log(containerElement);
+    constructor(containerElement) {
         this.container = containerElement;
         this.audio = document.createElement("audio");
         this.intervalID = 0;
     }
 
-    static intervalFn(e) {
+    static intervalFn() {
         let audio = EffectSound.audio;
 
         if (audio.readyState) {
