@@ -1,5 +1,14 @@
 console.info(`□ cannon.js is loading...`);
 
+const efSound = new EffectSound($ts.getEl(".contentsArea")[0]);
+
+efSound.initiate();
+
+const commentbox = new CommentBox({
+    container: $ts.getEl(".commentBox")[0],
+    comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0])
+}, commentConfig).start();
+
 class DropMove {
     constructor(HTMLelement) {
         this.element = HTMLelement;
@@ -46,6 +55,7 @@ const dragdrop = new DragDrop({
     dragElements: $ts.getEl(".dragObj"),
     dropAreaElements: $ts.getEl(".dropArea"),
     completeCallback: (dragObj, dropObj) => {
+        efSound.play("media/change.mp3");
         dropCanvasInfo.selectedObjects[dropObj.answers - 1] = dropCanvasInfo.objectImgIndexing[dragObj.answers - 1];
 
         dropMoves.changeSrcs();
@@ -237,32 +247,38 @@ function drawGraphs(count = 0) {
 // event 추가하기
 function addEvents() {
     new ClickToggleClass(playBtn, "on", {
+        click: () => {
+            efSound.play("media/click.mp3");
+        },
         on: () => {
             timer.startTimer();
-            stopBtn.click();
-            replayBtn.click();
+            stopBtn.object.off();
+            replayBtn.object.off();
             disableAllObjects();
         }
     }).addEvent();
+
     new ClickToggleClass(stopBtn, "on", {
+        click: () => {
+            efSound.play("media/click.mp3");
+        },
         on: () => {
             timer.pauseTimer();
         },
-        off: () => {
-        }
     }).addEvent();
+
     new ClickToggleClass(replayBtn, "on", {
+        click: () => {
+            efSound.play("media/click.mp3");
+        },
         on: () => {
             timer.resetTimer();
-            playBtn.click();
+            playBtn.object.off();
             if (!stopBtn.object.isOn) {
-                stopBtn.click();
+                stopBtn.object.on();
             }
 
             disableSelectedObjects();
-        },
-        off: () => {
-
         }
     }).addEvent();
 }

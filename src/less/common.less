@@ -67,3 +67,27 @@ canvas {
 @btns-image: "../images/btns.png";
 @btn-width: 71px;
 @btn-height: 57px;
+
+.commentBox {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, .5);
+	//font-family: NGothicEB;
+	line-height: 1.25;
+	text-align: center;
+}
+.commentBox_inner {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	left: 0;
+	height: 200px;
+	background: rgba(0, 0, 0, .7);
+	color: white;
+	font-size: 40px;
+	.transform(translateY(-50%));
+	.verticalCentering();
+}

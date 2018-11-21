@@ -5,3 +5,19 @@
   -o-transform: @value;
   transform: @value;
 }
+
+.verticalCentering {
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  > * {
+    display: inline-block;
+    max-width: 98%;
+    vertical-align: middle;
+  }
+}

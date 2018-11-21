@@ -37,8 +37,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _this.count++;
 
             if (_this.timePassedCorr >= _this.config.limitTime) {
-              // this.pauseTimer();
-              stopBtn.click();
+              _this.pauseTimer();
+
+              stopBtn.object.on();
             }
           }
         });

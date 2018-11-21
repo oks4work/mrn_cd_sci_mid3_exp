@@ -25,8 +25,8 @@
                     this.count++;
 
                     if (this.timePassedCorr >= this.config.limitTime) {
-                        // this.pauseTimer();
-                        stopBtn.click();
+                        this.pauseTimer();
+                        stopBtn.object.on();
                     }
                 }
             });

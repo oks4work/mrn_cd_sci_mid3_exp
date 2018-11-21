@@ -7,6 +7,12 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 console.info("\u25A1 cannon.js is loading...");
+var efSound = new EffectSound($ts.getEl(".contentsArea")[0]);
+efSound.initiate();
+var commentbox = new CommentBox({
+  container: $ts.getEl(".commentBox")[0],
+  comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0])
+}, commentConfig).start();
 
 var DropMove =
 /*#__PURE__*/
@@ -60,6 +66,7 @@ var dragdrop = new DragDrop({
   dragElements: $ts.getEl(".dragObj"),
   dropAreaElements: $ts.getEl(".dropArea"),
   completeCallback: function completeCallback(dragObj, dropObj) {
+    efSound.play("media/change.mp3");
     dropCanvasInfo.selectedObjects[dropObj.answers - 1] = dropCanvasInfo.objectImgIndexing[dragObj.answers - 1];
     dropMoves.changeSrcs();
     initDropCanvas();
@@ -218,30 +225,37 @@ function drawGraphs() {
 
 function addEvents() {
   new ClickToggleClass(playBtn, "on", {
+    click: function click() {
+      efSound.play("media/click.mp3");
+    },
     on: function on() {
       timer.startTimer();
-      stopBtn.click();
-      replayBtn.click();
+      stopBtn.object.off();
+      replayBtn.object.off();
       disableAllObjects();
     }
   }).addEvent();
   new ClickToggleClass(stopBtn, "on", {
+    click: function click() {
+      efSound.play("media/click.mp3");
+    },
     on: function on() {
       timer.pauseTimer();
-    },
-    off: function off() {}
+    }
   }).addEvent();
   new ClickToggleClass(replayBtn, "on", {
+    click: function click() {
+      efSound.play("media/click.mp3");
+    },
     on: function on() {
       timer.resetTimer();
-      playBtn.click();
+      playBtn.object.off();
 
       if (!stopBtn.object.isOn) {
-        stopBtn.click();
+        stopBtn.object.on();
       }
 
       disableSelectedObjects();
-    },
-    off: function off() {}
+    }
   }).addEvent();
 }

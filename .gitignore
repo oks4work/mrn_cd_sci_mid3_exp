@@ -1,5 +1,6 @@
 debug.log
 cli_infos.txt
+*.zip
 
 # webstorm 설정 파일
 .idea
