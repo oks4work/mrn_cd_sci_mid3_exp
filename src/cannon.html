@@ -13,32 +13,45 @@
 	<body>
 
 		<div class="contentsArea">
-			<ul class="cannonPoint">
-				<li><img src="images/cannon/colorRound_top.png"></li>
-				<li><span class="dispaly_IB colorRound_GR"><div class="colorRound_WT"></div></span>C</li>
-				<li><span class="dispaly_IB colorRound_PK"><div class="colorRound_WT"></div></span>B</li>
-				<li><span class="dispaly_IB colorRound_OR"><div class="colorRound_WT"></div></span>A</li>
-			</ul>
-			<span class="cannonPoint_line"></span>
 			<img src="images/cannon/cannonIMG.png" class="cannonImg">
+
 			<div class="cannonArea">
+				<div class="cannonLineArea">
+					<div id="increaseLine" class="line increase"></div>
+					<div id="descendLine" class="line descend"></div>
+				</div>
 				<img id="cannonball" class="cannonball" src="images/cannon/colorRound_top.png" alt="" />
 			</div>
+
+			<ul class="cannonLinePins"></ul>
+
 			<div class="cannonGraph">
 				<div class="graphTitleTxt"><p>A 지점</p></div>
 				<div class="graphTitleLine"></div>
 				<ul class="graphContents">
-					<li class="colorBar purple">
-						<div>47 <span class="NMyeongjoEB">m</span></div>
+					<li id="distance" class="colorBar">
+						<div>
+							<span class="num">47</span>
+							<span class="NMyeongjoEB">m</span>
+						</div>
 					</li>
-					<li class="colorBar blue">
-						<div>77 <span class="NMyeongjoEB">J</span></div>
+					<li id="kineticEnergy" class="colorBar">
+						<div>
+							<span class="num">77</span>
+							<span class="NMyeongjoEB">J</span>
+						</div>
 					</li>
-					<li class="colorBar green">
-						<div>95 <span class="NMyeongjoEB">J</span></div>
+					<li id="locationEnergy" class="colorBar">
+						<div>
+							<span class="num">95</span>
+							<span class="NMyeongjoEB">J</span>
+						</div>
 					</li>
-					<li class="colorBar pink">
-						<div>47 <span class="NMyeongjoEB">J</span></div>
+					<li id="mechanicalEnergy" class="colorBar">
+						<div>
+							<span class="num">47</span>
+							<span class="NMyeongjoEB">J</span>
+						</div>
 					</li>
 				</ul>
 				<ul class="cannonGraph_text">
@@ -73,12 +86,12 @@
 			</div>
 		</div>
 		<script type="text/javascript" src="js/$ts.js"></script>
-		<script type="text/javascript" src="js/cannon_config.js"></script>
 		<script type="text/javascript" src="js/efSound.js"></script>
 		<script type="text/javascript" src="js/clickToggle.js"></script>
-		<script type="text/javascript" src="js/inputConn.js"></script>
-		<script type="text/javascript" src="js/cannonTimer.js"></script>
-		<script type="text/javascript" src="js/cannon.js"></script>
+		<script type="text/javascript" src="js/cannon/inputConnection.js"></script>
+		<script type="text/javascript" src="js/cannon/config.js"></script>
+		<script type="text/javascript" src="js/cannon/timer.js"></script>
+		<script type="text/javascript" src="js/cannon/cannon.js"></script>
 		<script type="text/javascript">
 
 			document.addEventListener('DOMContentLoaded', function () {

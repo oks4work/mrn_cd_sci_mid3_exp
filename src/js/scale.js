@@ -36,12 +36,12 @@
 
   Scale.prototype.setScale = function (zoomRate, left) {
     if (this.mode === 'fullSize') {
-      Ball.transform = 'scale(' + this.horizontalZoomRate + ', ' + this.verticalZoomRate + ')';
+      this.element.style.transform = 'scale(' + this.horizontalZoomRate + ', ' + this.verticalZoomRate + ')';
       this.element.style.MsTransform = 'scale(' + this.horizontalZoomRate + ', ' + this.verticalZoomRate + ')';
       this.element.style.MozTransform = 'scale(' + this.horizontalZoomRate + ', ' + this.verticalZoomRate + ')';
       this.element.style.WebkitTransform = 'scale(' + this.horizontalZoomRate + ', ' + this.verticalZoomRate + ')';
     } else {
-      Ball.transform = 'scale(' + this.zoomRate + ')';
+      this.element.style.transform = 'scale(' + this.zoomRate + ')';
       this.element.style.MsTransform = 'scale(' + this.zoomRate + ')';
       this.element.style.MozTransform = 'scale(' + this.zoomRate + ')';
       this.element.style.WebkitTransform = 'scale(' + this.zoomRate + ')';

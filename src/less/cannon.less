@@ -17,11 +17,11 @@
 	letter-spacing: -1px;
 	font-family: NGothicEB;
 
-	background: url(../images/cannon/cannonEXPage.png) center no-repeat;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+	background: url(../images/cannon/cannonEXPage.png) center / cover no-repeat;
+	//-webkit-background-size: cover;
+	//-moz-background-size: cover;
+	//-o-background-size: cover;
+	//background-size: cover;
 }
 
 /*폭탄 이미지*/
@@ -32,77 +32,13 @@
     left: 210px;
 }
 
-.cannonPoint_line {
-	position: absolute;
-	bottom: 340px;
-    left: 277px;
-	border: 1px dashed #262261;
-	display: inline-block;
-	height: 310px;
-}
-
-/*************폭탄*****************/
-.cannonPoint {
-	position: absolute;
-	top: 85px;
-    left: 261px;
-    z-index: 2;
-}
-.cannonPoint li:nth-of-type(1) img {
-	width: 36px;
-}
-.cannonPoint li:nth-of-type(2), 
-.cannonPoint li:nth-of-type(3), 
-.cannonPoint li:nth-of-type(4) {
-	margin-left: 4px;
-}
-
-.cannonPoint li {
-	margin-bottom: 47px;
-	font-size: 32px;
-	color: #ffffff;
-	text-shadow: 1px 1px 1px #aaaaaa;
-	z-index: 2;
-}
-.cannonPoint li span {
-	margin-right:8px;
-}
-
-/*포인트 동그라미 컬러*/
-.colorRound_WT {
-	background-color:#ffffff;
-	width: 14px;
-	height: 14px;
-	border-radius: 50%;
-	margin: 5px;
-    box-shadow: -3px 3px 1px #5b5b5b;
-}
-.colorRound_GR,
-.colorRound_PK,
-.colorRound_OR {
-	display: inline-block;
-	width: 24px;
-	height: 24px;
-	border-radius: 50%;
-}
-.colorRound_GR {
-	background-color:#9cba5f;
-}
-.colorRound_PK {
-	background-color:#ff6971;
-}
-.colorRound_OR {
-	background-color:#ffa03b;
-}
-
-
 /***************그래프**************/
 .cannonGraph {
-    width: 330px;
-    height: 350px;
 	position: absolute;
-	top: 266px;
-	left: 650px;
+	//top: 266px;
+	//left: 650px;
+	right: 60px;
+	bottom: 160px;
 	color: #ffffff;
 }
 
@@ -113,7 +49,12 @@
 		border-radius: 20px 20px 0 0;
 		padding: 6px 25px;
 		font-size: 27px;
-		text-shadow: 0px 1px 0px #aaaaaa;
+		text-shadow: 0 1px 0 #aaaaaa;
+	}
+
+	&.off > p {
+		text-shadow: none;
+		color: transparent;
 	}
 }
 .graphTitleLine {
@@ -121,80 +62,95 @@
 	background-color: #c8243f;
 }
 .graphContents {
-	width: 100%;
     height: 250px;
-	position: absolute;
 	background: rgba(255, 255, 255, .8);
-	//border-top: 4px solid #c8243f;
 }
 
 .graphContents {
 	display: flex;
 	align-items: flex-end;
-	justify-content: space-evenly;
-}
-.graphContents .colorBar {
-    width: 50px;
-	font-size: 22px;
-	text-align: center;
-}
-.graphContents .colorBar div {
-	height: 31px;
-	line-height: 31px;
-}
+	justify-content: center;
 
-.graphContents .colorBar.purple {
-	background-color: #9b56e9;
-    height: 125px;
-}
-.graphContents .colorBar.purple div {
-	background-color: #7c3ac7;
-}
+	.colorBar {
+		position: relative;
+		//width: 50px;
+		//height: 100px;
+		font-size: 20px;
+		font-family: NGothicB;
+		text-align: center;
 
-.graphContents .colorBar.blue {
-	background-color: #39b5f7;
-    height: 184px;
-}
-.graphContents .colorBar.blue div {
-	background-color: #2d90c4;
-}
+		> div {
+			position: absolute;
+			display: flex;
+			align-items: flex-end;
+			justify-content: center;
+			//top: -31px;
+			left: 0;
+			width: inherit;
+			//height: 31px;
+			//line-height: 31px;
 
-.graphContents .colorBar.green {
-	background-color: #34a443;
-    height: 220px;
-}
-.graphContents .colorBar.green div {
-	background-color: #267831;
-}
+			> .num {
+				margin-right: .1em;
+			}
 
-.graphContents .colorBar.pink {
-	background-color: #ed5aa2;
-    height: 125px;
-}
-.graphContents .colorBar.pink div {
-	background-color: #c24a84;
+			> .NMyeongjoEB {
+				font-size: .9em;
+			}
+		}
+
+		&#distance {
+			background-color: #9b56e9;
+
+			> div {
+				background-color: #7c3ac7;
+
+				> .NMyeongjoEB {
+					font-size: 1em;
+				}
+			}
+		}
+
+		&#kineticEnergy {
+			background-color: #39b5f7;
+
+			> div {
+				background-color: #2d90c4;
+			}
+		}
+
+		&#locationEnergy {
+			background-color: #34a443;
+
+			> div {
+				background-color: #267831;
+			}
+		}
+
+		&#mechanicalEnergy {
+			background-color: #ed5aa2;
+
+			> div {
+				background-color: #c24a84;
+			}
+		}
+	}
 }
 
 
 /*그래프 하단 텍스트*/
 .cannonGraph_text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
     background-color: #2b2926;
     width: 100%;
-    height: 56px;
-    position: absolute;
-    bottom: 0px;
+    height: 60px;
 
-    display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-}
-.cannonGraph_text li {
-    float: left;
-    font-size: 20px;
-    text-align: center;
-}
-.cannonGraph_text li:first-of-type {
-	margin-left: 9px;
+	> li {
+		font-size: 20px;
+		text-align: center;
+	}
 }
 
 /***********하단 바*****************/
@@ -283,7 +239,7 @@
 	width: 45px;
 	height: 470px;
 	border-radius: 15px;
-	background-color: rgba(0, 0, 0, 0.1);
+	//background-color: rgba(0, 0, 0, 0.1);
 	overflow: hidden;
 }
 
@@ -291,4 +247,77 @@
 	position: absolute;
 	bottom: -36px;
 	left: 4px;
+	z-index: 1;
+}
+
+.cannonLineArea {
+	position: absolute;
+	bottom: 0;
+	left: 5px;
+	width: 35px;
+	height: 100px;
+	//background-color: rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	
+	> .line {
+		position: absolute;
+		width: inherit;
+		left: 0;
+		right: 0;
+
+		&::before {
+			content: "";
+			position: absolute;
+			display: block;
+			border: 1px dashed #262261;
+			left: 16px;
+			height: 100%;
+		}
+
+		&.increase {
+			bottom: 35px;
+		}
+		&.descend {
+			top: 1px;
+		}
+	}
+}
+
+.cannonLinePins {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	> li {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		top: 0;
+		left: 10px;
+		font-size: 32px;
+		color: #ffffff;
+		text-shadow: 1px 1px 1px #aaaaaa;
+		cursor: pointer;
+
+		> .circle {
+			position: relative;
+			border-radius: 50%;
+			width: 24px;
+			height: 24px;
+			margin-right: .25em;
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				border-radius: 50%;
+				width: 14px;
+				height: 14px;
+				margin: 5px;
+				background-color: #ffffff;
+				box-shadow: -3px 3px 1px #5b5b5b;
+			}
+		}
+	}
 }

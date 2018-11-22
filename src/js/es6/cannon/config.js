@@ -11,10 +11,10 @@ const config = {
     },
 
     velocity: {
-        min: 10,
-        max: 20,
-        initial: 15,
-        current: 15
+        min: -10,
+        max: -20,
+        initial: -15,
+        current: -15
     },
 
     mass: {
@@ -33,7 +33,21 @@ const config = {
     },
 
     cannon: {
-        cannonAreaHeight: 465, // 공의 최대 높이, 465px
+        areaHeight: 465, // 공의 최대 높이, 465px
+    },
+
+    pin: {
+        maxLength: 3,
+        text: ['A', 'B', 'C'],
+        color: ['#ffa03b', '#ff6971', '#9cba5f']
+    },
+
+    graph: {
+        areaHeight: 300, // 영역 높이
+        barWidth: 80, // bar 너비
+        barMargin: 25, // bar 간격
+        tipHeight: 30, // tip 높이
+        barTransitionDuration: 500, // bar 높이 변하는 속도 (ms)
     },
 
     get maxDistance() {
@@ -41,6 +55,10 @@ const config = {
     },
 
     get cannonMeterPixelRatio() {
-        return - this.cannon.cannonAreaHeight / this.maxDistance;
+        return - this.cannon.areaHeight / this.maxDistance;
+    },
+
+    get mechanicalE() {
+        return this.mass.current * Math.pow(this.velocity.current, 2) / 2;
     }
 };
