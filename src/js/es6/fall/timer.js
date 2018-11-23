@@ -12,6 +12,7 @@
             this.intervalID = window.setInterval(() => {
                 dropCanvasInfo.objectPos.y = dropCanvasInfo.objectPos.initial.y + this.distance * this.config.meterPixelRatio;
 
+                dropMoves.show();
                 dropMoves.move();
 
                 clock.changeAll(this.timePassed);
@@ -20,13 +21,14 @@
                     console.log(`t: ${this.timePassedCorr / 1000}s, v: ${this.velocity}m/s, d: ${this.distance}m, playback speed: ${this.config.playbackSpeed}`);
 
                     drawGraphs(this.count);
-                    drawObjects();
+                    drawObjects(this.timePassedCorr === this.config.limitTime);
 
                     this.count++;
 
                     if (this.timePassedCorr >= this.config.limitTime) {
                         this.pauseTimer();
                         stopBtn.object.on();
+                        dropMoves.hide();
                     }
                 }
             });

@@ -72,8 +72,9 @@ class CannonLine {
         let clientY, cannonSize, cannonY, cannonHeight, clickedY, result;
 
         clientY = event.touches ? event.touches[0].clientY : event.clientY;
+        clientY = clientY / cannon.scale.getZoomRate();
         cannonSize = $ts.getSize(cannon.elements.cannonArea);
-        cannonY = cannonSize.y;
+        cannonY = cannonSize.top;
         cannonHeight = cannonSize.height;
 
         clickedY = clientY - cannonY; // 실제 클릭한 높이 (위에서 아래 => y값)
@@ -348,7 +349,8 @@ class Cannon {
 
         this.commentBox = new CommentBox({
             container: $ts.getEl(".commentBox")[0],
-            comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0])
+            comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0]),
+            btn: $ts.getEl(".commentNextBtn")[0]
         }, config.comment);
 
         this.scale = new $cale({
@@ -374,12 +376,15 @@ class Cannon {
 
     initiateHTMLelements() {
         let intervalID = window.setInterval(() => {
-            let cannonAreaStyle = $ts.getStyles(this.elements.cannonArea);
+            let cannonAreaSize, cannonAreaStyle;
 
-            if (cannonAreaStyle.left) {
+            cannonAreaSize = $ts.getSize(this.elements.cannonArea)
+            cannonAreaStyle = $ts.getStyles(this.elements.cannonArea)
+
+            if (cannonAreaSize.top && cannonAreaStyle.left) {
                 window.clearInterval(intervalID);
 
-                this.elements.pinContainer.style.top = `${cannonAreaStyle.top}px`;
+                this.elements.pinContainer.style.top = `${cannonAreaSize.top}px`;
                 this.elements.pinContainer.style.left = `${cannonAreaStyle.left}`;
             }
         });

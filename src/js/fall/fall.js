@@ -11,7 +11,8 @@ var efSound = new EffectSound($ts.getEl(".contentsArea")[0]);
 efSound.initiate();
 var commentbox = new CommentBox({
   container: $ts.getEl(".commentBox")[0],
-  comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0])
+  comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0]),
+  btn: $ts.getEl(".commentNextBtn")[0]
 }, commentConfig);
 commentbox.start();
 
@@ -41,15 +42,26 @@ function () {
     value: function changeSrc(string) {
       this.img.src = string;
     }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.element.style.display = "none";
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      this.element.style.display = "";
+    }
   }]);
 
   return DropMove;
 }(); // scale
 
 
-var scale = new $cale({
+var _scale = new $cale({
   target: $ts.getEl(".contentsArea")[0]
 }); // timer
+
 
 var timer = new Timer(timerConfig); // digital clock
 
@@ -69,8 +81,11 @@ var dragdrop = new DragDrop({
   completeCallback: function completeCallback(dragObj, dropObj) {
     efSound.play("media/change.mp3");
     dropCanvasInfo.selectedObjects[dropObj.answers - 1] = dropCanvasInfo.objectImgIndexing[dragObj.answers - 1];
-    dropMoves.changeSrcs();
+    dropMoves.changeSources();
     initDropCanvas();
+  },
+  scale: function scale() {
+    return _scale.getZoomRate();
   }
 });
 var dropMoves = {
@@ -79,16 +94,27 @@ var dropMoves = {
     this.objects[0].positioning(dropCanvasInfo.objectPos.left, dropCanvasInfo.objectPos.y);
     this.objects[1].positioning(dropCanvasInfo.objectPos.right, dropCanvasInfo.objectPos.y);
   },
-  changeSrcs: function changeSrcs() {
+  changeSources: function changeSources() {
     this.objects[0].changeSrc(dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[0]]);
     this.objects[1].changeSrc(dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[1]]);
+  },
+  hide: function hide() {
+    this.objects.forEach(function (object) {
+      object.hide();
+    });
+  },
+  show: function show() {
+    this.objects.forEach(function (object) {
+      object.show();
+    });
   }
 };
 $ts.getEl(".dropMove").forEach(function (el) {
   dropMoves.objects.push(new DropMove(el));
 });
 dropMoves.move();
-dropMoves.changeSrcs();
+dropMoves.hide();
+dropMoves.changeSources();
 dragdrop.initialize();
 initDropCanvas();
 initGraphCanvases();
@@ -112,8 +138,7 @@ function initDropCanvas() {
   dropCanvasInfo.objectPos.y = dropCanvasInfo.objectPos.initial.y;
   dropCanvasInfo.objectPos.left = dropCanvasInfo.objectPos.initial.left;
   dropCanvasInfo.objectPos.right = dropCanvasInfo.objectPos.initial.right;
-  drawObjects();
-  disableSelectedObjects();
+  drawObjects(); // disableSelectedObjects();
 } // 드론 그리기
 
 
@@ -134,20 +159,32 @@ function drawDrones() {
 } // 오브젝트 그리기
 
 
-function drawObjects() {
-  var canvas, ctx, leftObject, rightObject;
+function drawObjects(lastObject) {
+  var canvas, ctx, leftObject, rightObject, leftSrc, rightSrc;
   canvas = getDropCanvas();
   ctx = canvas.getContext('2d');
   leftObject = new Image();
   rightObject = new Image();
+  leftSrc = dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[0]];
+  rightSrc = dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[1]];
+
+  if (lastObject) {
+    leftSrc = addBroken(leftSrc);
+    rightSrc = addBroken(rightSrc);
+  }
+
   leftObject.addEventListener("load", function () {
     ctx.drawImage(leftObject, dropCanvasInfo.objectPos.left - leftObject.width / 2, dropCanvasInfo.objectPos.y - leftObject.height / 2);
   });
   rightObject.addEventListener("load", function () {
     ctx.drawImage(rightObject, dropCanvasInfo.objectPos.right - rightObject.width / 2, dropCanvasInfo.objectPos.y - rightObject.height / 2);
   });
-  leftObject.src = dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[0]];
-  rightObject.src = dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[1]];
+  leftObject.src = leftSrc;
+  rightObject.src = rightSrc;
+
+  function addBroken(string) {
+    return "".concat(string.slice(0, string.lastIndexOf(".")), "_broken").concat(string.slice(string.lastIndexOf("."), string.length));
+  }
 } // 선택된 오브젝트 비활성화하기
 
 
@@ -166,6 +203,13 @@ function disableSelectedObjects() {
         dragObj.dataset.dragElement = "complete";
       }
     });
+  });
+} // 모든 오브젝트 활성화하기
+
+
+function ableAllObjects() {
+  $ts.getEl(".dragObj").forEach(function (dragObj) {
+    dragObj.dataset.dragElement = "";
   });
 } // 모든 오브젝트 비활성화하기
 
@@ -256,7 +300,7 @@ function addEvents() {
         stopBtn.object.on();
       }
 
-      disableSelectedObjects();
+      ableAllObjects(); // disableSelectedObjects();
     }
   }).addEvent();
 }

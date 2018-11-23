@@ -148,15 +148,17 @@ function DragObj(dragElement, DragDrop) {
   }; // drag positioning
 
 
-  this.dragPositioning = function (coordinates) {
+  this.dragPositioning = function (coordinates) { console.log("dragPositioning", this, coordinates);
     // console.log(coordinates.constructor.name); // dropArea 위에 떨어질 경우
+
+    let scale = this.DragDrop.scale ? this.DragDrop.scale() : 1;
 
     if (coordinates.constructor.name === "DropAreaObj") {
       this.dragElement.style.left = coordinates.dropSize.x + "px";
       this.dragElement.style.top = coordinates.dropSize.y + "px"; // 처음 자리로 돌아갈 경우
     } else {
-      this.dragElement.style.left = this.dragElementStartCoordinates.x + (coordinates.x - this.DragDrop.eventStartCoordinates.x) + "px";
-      this.dragElement.style.top = this.dragElementStartCoordinates.y + (coordinates.y - this.DragDrop.eventStartCoordinates.y) + "px";
+      this.dragElement.style.left = this.dragElementStartCoordinates.x + (coordinates.x - this.DragDrop.eventStartCoordinates.x) / scale + "px";
+      this.dragElement.style.top = this.dragElementStartCoordinates.y + (coordinates.y - this.DragDrop.eventStartCoordinates.y) / scale + "px";
     }
   }; // drag end
 
@@ -305,6 +307,7 @@ var DragDrop = function DragDrop(opts) {
   this.areaObjs = [];
   this.moveEventIsOutCorrection = 10; // options
   this.completeCallback = opts.completeCallback || null;
+  this.scale = opts.scale || null;
 
   this.opts = {
     answer: false,
@@ -595,6 +598,7 @@ var DragDrop = function DragDrop(opts) {
     }
 
     self = this.self;
+
     self.dragObjNow.dragPositioning(coordinates);
     moveEventIsOut = self.checkMoveEventIsOut(coordinates);
 

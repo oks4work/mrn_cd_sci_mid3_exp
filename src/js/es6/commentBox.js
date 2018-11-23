@@ -1,7 +1,7 @@
 class CommentBox {
-    constructor(HTMLelements, opts) {
-        this.elements = HTMLelements;
-        this.opts = opts;
+    constructor(elements, config) {
+        this.elements = elements;
+        this.config = config;
         this.count = 0;
     }
 
@@ -12,42 +12,75 @@ class CommentBox {
         comments = this.elements.comments;
 
         container.style.opacity = 1;
-        container.style.transitionDuration = `${this.opts.containerTransitionDuration}ms`;
+        container.style.transitionDuration = `${this.config.containerTransitionDuration}ms`;
 
         comments.forEach((comment, index) => {
             comment.style.opacity = 0;
-            comment.innerHTML = this.opts.commentTexts[index];
+            comment.innerHTML = this.config.commentTexts[index];
         });
+
+        // mode: btn
+        if (this.config.mode === "btn") {
+            this.hideBtn();
+        }
     }
 
-    addEvent() {
+    addEvents() {
         document.addEventListener("DOMContentLoaded", () => {
             this.elements.comments[0].style.display = "";
-            this.showNextComment(this.opts.firstShowDelay);
+            this.showNextTimeout(this.config.firstShowDelay);
         });
+
+        if (this.config.mode === "btn") {
+            this.elements.btn.addEventListener("click", () => {
+                this.showNext();
+            });
+        }
     }
 
-    showNextComment(delay) {
+    showNextTimeout(delay) {
         window.setTimeout(() => {
-            if (this.elements.comments[this.count - 1]) {
-                this.elements.comments[this.count - 1].style.display = "none";
+            this.showNext();
+        }, delay);
+    }
+
+    showNext() {
+        // mode: btn
+        if (this.config.mode === "btn") {
+            if (this.count === this.elements.comments.length) {
+                this.hideComment();
+                return;
+            } else {
+                // this.hideBtn();
             }
+        }
 
-            this.elements.comments[this.count].style.display = "";
-            this.elements.comments[this.count].style.opacity = 1;
-            this.elements.comments[this.count].style.transitionDuration = `${this.opts.transitionDuration}ms`;
+        if (this.elements.comments[this.count - 1]) {
+            this.elements.comments[this.count - 1].style.display = "none";
+        }
+
+        this.elements.comments[this.count].style.display = "";
+        this.elements.comments[this.count].style.opacity = "1";
+        this.elements.comments[this.count].style.transitionDuration = `${this.config.transitionDuration}ms`;
 
 
-            this.count++;
+        this.count++;
 
-            window.setTimeout(() => {
+        window.setTimeout(() => {
+            // mode: auto
+            if (this.config.mode === "auto") {
                 if (!this.elements.comments[this.count]) {
                     this.hideComment();
                 } else {
-                    this.showNextComment(0);
+                    this.showNextTimeout(0);
                 }
-            }, this.opts.commentHideDelay[this.count - 1]);
-        }, delay);
+            }
+
+            // mode: btn
+            else if (this.config.mode === "btn") {
+                this.showBtn();
+            }
+        }, this.config.commentHideDelay[this.count - 1]);
     }
 
     hideComment() {
@@ -55,11 +88,23 @@ class CommentBox {
 
         window.setTimeout(() => {
             this.elements.container.style.display = "none";
-        }, this.opts.containerTransitionDuration);
+        }, this.config.containerTransitionDuration);
+    }
+
+    hideBtn() {
+        this.elements.btn.style.opacity = "0";
+        this.elements.btn.style.visibility = "hidden";
+        this.elements.btn.style.transitionDuration = "";
+    }
+
+    showBtn() {
+        this.elements.btn.style.opacity = "1";
+        this.elements.btn.style.visibility = "visible";
+        this.elements.btn.style.transitionDuration = `${this.config.containerTransitionDuration}ms`;
     }
 
     start() {
         this.setBasicStyles();
-        this.addEvent();
+        this.addEvents();
     }
 }

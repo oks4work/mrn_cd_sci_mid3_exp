@@ -1,12 +1,13 @@
 const config = {
     comment: {
+        mode: "btn",
         firstShowDelay: 300,
         transitionDuration: 1000,
         commentTexts: [
-            "위로 던져 올린 물체의 역학적 에너지는 어떻게 될까요?",
-            "&#9654; 버튼을 누르세요."
+            "위로 던져 올린 물체의 역학적 에너지는 <br />어떻게 될까요?",
+            // "&#9654; 버튼을 누르세요."
         ],
-        commentHideDelay: [3000, 1500],
+        commentHideDelay: [3000, /* 1500 */],
         containerTransitionDuration: 300
     },
 

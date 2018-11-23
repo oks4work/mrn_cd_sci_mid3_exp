@@ -201,6 +201,7 @@
 	display: flex;
 	justify-content: center;
 	margin-left: 50px;
+	.transform(translateY(-15px));
 
 	li {
 		display: inline-block;
@@ -299,6 +300,10 @@
 		text-shadow: 1px 1px 1px #aaaaaa;
 		cursor: pointer;
 
+		> * {
+			flex-shrink: 0;
+		}
+
 		> .circle {
 			position: relative;
 			border-radius: 50%;
@@ -320,4 +325,11 @@
 			}
 		}
 	}
+}
+
+.guideText {
+	bottom: 5px;
+	font-size: 16px;
+	padding-left: 620px;
+	color: #52322e;
 }

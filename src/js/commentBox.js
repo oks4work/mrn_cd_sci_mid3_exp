@@ -9,11 +9,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var CommentBox =
 /*#__PURE__*/
 function () {
-  function CommentBox(HTMLelements, opts) {
+  function CommentBox(elements, config) {
     _classCallCheck(this, CommentBox);
 
-    this.elements = HTMLelements;
-    this.opts = opts;
+    this.elements = elements;
+    this.config = config;
     this.count = 0;
   }
 
@@ -26,61 +26,107 @@ function () {
       container = this.elements.container;
       comments = this.elements.comments;
       container.style.opacity = 1;
-      container.style.transitionDuration = "".concat(this.opts.containerTransitionDuration, "ms");
+      container.style.transitionDuration = "".concat(this.config.containerTransitionDuration, "ms");
       comments.forEach(function (comment, index) {
         comment.style.opacity = 0;
-        comment.innerHTML = _this.opts.commentTexts[index];
-      });
+        comment.innerHTML = _this.config.commentTexts[index];
+      }); // mode: btn
+
+      if (this.config.mode === "btn") {
+        this.hideBtn();
+      }
     }
   }, {
-    key: "addEvent",
-    value: function addEvent() {
+    key: "addEvents",
+    value: function addEvents() {
       var _this2 = this;
 
       document.addEventListener("DOMContentLoaded", function () {
         _this2.elements.comments[0].style.display = "";
 
-        _this2.showNextComment(_this2.opts.firstShowDelay);
+        _this2.showNextTimeout(_this2.config.firstShowDelay);
       });
+
+      if (this.config.mode === "btn") {
+        this.elements.btn.addEventListener("click", function () {
+          _this2.showNext();
+        });
+      }
     }
   }, {
-    key: "showNextComment",
-    value: function showNextComment(delay) {
+    key: "showNextTimeout",
+    value: function showNextTimeout(delay) {
       var _this3 = this;
 
       window.setTimeout(function () {
-        if (_this3.elements.comments[_this3.count - 1]) {
-          _this3.elements.comments[_this3.count - 1].style.display = "none";
-        }
-
-        _this3.elements.comments[_this3.count].style.display = "";
-        _this3.elements.comments[_this3.count].style.opacity = 1;
-        _this3.elements.comments[_this3.count].style.transitionDuration = "".concat(_this3.opts.transitionDuration, "ms");
-        _this3.count++;
-        window.setTimeout(function () {
-          if (!_this3.elements.comments[_this3.count]) {
-            _this3.hideComment();
-          } else {
-            _this3.showNextComment(0);
-          }
-        }, _this3.opts.commentHideDelay[_this3.count - 1]);
+        _this3.showNext();
       }, delay);
+    }
+  }, {
+    key: "showNext",
+    value: function showNext() {
+      var _this4 = this;
+
+      // mode: btn
+      if (this.config.mode === "btn") {
+        if (this.count === this.elements.comments.length) {
+          this.hideComment();
+          return;
+        } else {// this.hideBtn();
+        }
+      }
+
+      if (this.elements.comments[this.count - 1]) {
+        this.elements.comments[this.count - 1].style.display = "none";
+      }
+
+      this.elements.comments[this.count].style.display = "";
+      this.elements.comments[this.count].style.opacity = "1";
+      this.elements.comments[this.count].style.transitionDuration = "".concat(this.config.transitionDuration, "ms");
+      this.count++;
+      window.setTimeout(function () {
+        // mode: auto
+        if (_this4.config.mode === "auto") {
+          if (!_this4.elements.comments[_this4.count]) {
+            _this4.hideComment();
+          } else {
+            _this4.showNextTimeout(0);
+          }
+        } // mode: btn
+        else if (_this4.config.mode === "btn") {
+            _this4.showBtn();
+          }
+      }, this.config.commentHideDelay[this.count - 1]);
     }
   }, {
     key: "hideComment",
     value: function hideComment() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.elements.container.style.opacity = 0;
       window.setTimeout(function () {
-        _this4.elements.container.style.display = "none";
-      }, this.opts.containerTransitionDuration);
+        _this5.elements.container.style.display = "none";
+      }, this.config.containerTransitionDuration);
+    }
+  }, {
+    key: "hideBtn",
+    value: function hideBtn() {
+      this.elements.btn.style.opacity = "0";
+      this.elements.btn.style.visibility = "hidden";
+      this.elements.btn.style.transitionDuration = "";
+    }
+  }, {
+    key: "showBtn",
+    value: function showBtn() {
+      this.elements.btn.style.opacity = "1";
+      this.elements.btn.style.visibility = "visible";
+      this.elements.btn.style.transitionDuration = "".concat(this.config.containerTransitionDuration, "ms");
     }
   }, {
     key: "start",
     value: function start() {
       this.setBasicStyles();
-      this.addEvent();
+      this.addEvents();
     }
   }]);
 

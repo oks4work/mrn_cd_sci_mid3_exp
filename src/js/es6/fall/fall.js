@@ -6,7 +6,8 @@ efSound.initiate();
 
 const commentbox = new CommentBox({
     container: $ts.getEl(".commentBox")[0],
-    comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0])
+    comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0]),
+    btn: $ts.getEl(".commentNextBtn")[0]
 }, commentConfig);
 
 commentbox.start();
@@ -29,6 +30,14 @@ class DropMove {
 
     changeSrc(string) {
         this.img.src = string;
+    }
+
+    hide() {
+        this.element.style.display = "none";
+    }
+
+    show() {
+        this.element.style.display = "";
     }
 }
 
@@ -60,9 +69,11 @@ const dragdrop = new DragDrop({
         efSound.play("media/change.mp3");
         dropCanvasInfo.selectedObjects[dropObj.answers - 1] = dropCanvasInfo.objectImgIndexing[dragObj.answers - 1];
 
-        dropMoves.changeSrcs();
+        dropMoves.changeSources();
         initDropCanvas();
-    }
+    },
+    
+    scale() { return scale.getZoomRate(); }
 });
 
 const dropMoves = {
@@ -73,9 +84,21 @@ const dropMoves = {
         this.objects[1].positioning(dropCanvasInfo.objectPos.right, dropCanvasInfo.objectPos.y);
     },
 
-    changeSrcs() {
+    changeSources() {
         this.objects[0].changeSrc(dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[0]]);
         this.objects[1].changeSrc(dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[1]]);
+    },
+
+    hide() {
+        this.objects.forEach((object) => {
+            object.hide();
+        });
+    },
+
+    show() {
+        this.objects.forEach((object) => {
+            object.show();
+        });
     }
 };
 
@@ -84,7 +107,8 @@ $ts.getEl(".dropMove").forEach((el) => {
 });
 
 dropMoves.move();
-dropMoves.changeSrcs();
+dropMoves.hide();
+dropMoves.changeSources();
 
 dragdrop.initialize();
 
@@ -116,7 +140,7 @@ function initDropCanvas() {
     dropCanvasInfo.objectPos.right = dropCanvasInfo.objectPos.initial.right;
 
     drawObjects();
-    disableSelectedObjects();
+    // disableSelectedObjects();
 }
 
 // 드론 그리기
@@ -141,14 +165,22 @@ function drawDrones() {
 }
 
 // 오브젝트 그리기
-function drawObjects() {
-    let canvas, ctx, leftObject, rightObject;
+function drawObjects(lastObject) {
+    let canvas, ctx, leftObject, rightObject, leftSrc, rightSrc;
 
     canvas = getDropCanvas();
     ctx = canvas.getContext('2d');
 
     leftObject = new Image();
     rightObject = new Image();
+
+    leftSrc = dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[0]];
+    rightSrc = dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[1]];
+
+    if (lastObject) {
+        leftSrc = addBroken(leftSrc);
+        rightSrc = addBroken(rightSrc);
+    }
 
     leftObject.addEventListener("load", function() {
         ctx.drawImage(leftObject, dropCanvasInfo.objectPos.left - leftObject.width / 2, dropCanvasInfo.objectPos.y - leftObject.height / 2);
@@ -157,8 +189,12 @@ function drawObjects() {
         ctx.drawImage(rightObject, dropCanvasInfo.objectPos.right - rightObject.width / 2, dropCanvasInfo.objectPos.y - rightObject.height / 2);
     });
 
-    leftObject.src = dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[0]];
-    rightObject.src = dropCanvasInfo.objectImgs[dropCanvasInfo.selectedObjects[1]];
+    leftObject.src = leftSrc;
+    rightObject.src = rightSrc;
+
+    function addBroken(string) {
+        return `${string.slice(0, string.lastIndexOf("."))}_broken${string.slice(string.lastIndexOf("."), string.length)}`;
+    }
 }
 
 // 선택된 오브젝트 비활성화하기
@@ -181,6 +217,13 @@ function disableSelectedObjects() {
                 dragObj.dataset.dragElement = "complete";
             }
         });
+    });
+}
+
+// 모든 오브젝트 활성화하기
+function ableAllObjects() {
+    $ts.getEl(".dragObj").forEach((dragObj) => {
+        dragObj.dataset.dragElement = "";
     });
 }
 
@@ -279,8 +322,8 @@ function addEvents() {
             if (!stopBtn.object.isOn) {
                 stopBtn.object.on();
             }
-
-            disableSelectedObjects();
+            ableAllObjects();
+            // disableSelectedObjects();
         }
     }).addEvent();
 }

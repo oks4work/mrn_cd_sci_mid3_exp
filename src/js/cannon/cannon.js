@@ -219,8 +219,9 @@ function () {
     value: function clickedHeight(event) {
       var clientY, cannonSize, cannonY, cannonHeight, clickedY, result;
       clientY = event.touches ? event.touches[0].clientY : event.clientY;
+      clientY = clientY / cannon.scale.getZoomRate();
       cannonSize = $ts.getSize(cannon.elements.cannonArea);
-      cannonY = cannonSize.y;
+      cannonY = cannonSize.top;
       cannonHeight = cannonSize.height;
       clickedY = clientY - cannonY; // 실제 클릭한 높이 (위에서 아래 => y값)
 
@@ -434,7 +435,8 @@ function () {
     this.graph = null;
     this.commentBox = new CommentBox({
       container: $ts.getEl(".commentBox")[0],
-      comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0])
+      comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0]),
+      btn: $ts.getEl(".commentNextBtn")[0]
     }, config.comment);
     this.scale = new $cale({
       target: $ts.getEl(".contentsArea")[0]
@@ -460,11 +462,13 @@ function () {
       var _this2 = this;
 
       var intervalID = window.setInterval(function () {
-        var cannonAreaStyle = $ts.getStyles(_this2.elements.cannonArea);
+        var cannonAreaSize, cannonAreaStyle;
+        cannonAreaSize = $ts.getSize(_this2.elements.cannonArea);
+        cannonAreaStyle = $ts.getStyles(_this2.elements.cannonArea);
 
-        if (cannonAreaStyle.left) {
+        if (cannonAreaSize.top && cannonAreaStyle.left) {
           window.clearInterval(intervalID);
-          _this2.elements.pinContainer.style.top = "".concat(cannonAreaStyle.top, "px");
+          _this2.elements.pinContainer.style.top = "".concat(cannonAreaSize.top, "px");
           _this2.elements.pinContainer.style.left = "".concat(cannonAreaStyle.left);
         }
       });
