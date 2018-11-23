@@ -12,7 +12,8 @@ efSound.initiate();
 var commentbox = new CommentBox({
   container: $ts.getEl(".commentBox")[0],
   comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0])
-}, commentConfig).start();
+}, commentConfig);
+commentbox.start();
 
 var DropMove =
 /*#__PURE__*/

@@ -3,10 +3,10 @@ const config = {
         firstShowDelay: 300,
         transitionDuration: 1000,
         commentTexts: [
-            "공기의 저항이 없을 때 무게가 서로 다른 물체가 <br />자유 낙하 운동을 하면 어느 물체가 먼저 떨어질까요?",
+            "위로 던져 올린 물체의 역학적 에너지는 어떻게 될까요?",
             "&#9654; 버튼을 누르세요."
         ],
-        commentHideDelay: [4000, 1500],
+        commentHideDelay: [3000, 1500],
         containerTransitionDuration: 300
     },
 

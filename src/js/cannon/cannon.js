@@ -137,14 +137,12 @@ function () {
     key: "showArea",
     value: function showArea() {
       this.area.style.display = "block";
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.area.style.height = 0;
-      this.increaseLine.style.height = 0;
-      this.descendLine.style.height = 0;
-    }
+    } // reset() {
+    //     this.area.style.height = 0;
+    //     this.increaseLine.style.height = 0;
+    //     this.descendLine.style.height = 0;
+    // }
+
   }, {
     key: "pinDistributor",
     value: function pinDistributor(config) {
@@ -190,26 +188,16 @@ function () {
       this.pinCount = 0;
     }
   }, {
-    key: "hidePins",
-    value: function hidePins() {
-      cannon.elements.pinContainer.style.display = "none";
-    }
-  }, {
-    key: "showPins",
-    value: function showPins() {
-      cannon.elements.pinContainer.style.display = "block";
-    }
-  }, {
     key: "hideAll",
     value: function hideAll() {
       this.hideArea();
-      this.hidePins();
+      CannonLine.hidePins();
     }
   }, {
     key: "showAll",
     value: function showAll() {
       this.showArea();
-      this.showPins();
+      CannonLine.showPins();
     }
   }, {
     key: "reset",
@@ -234,25 +222,21 @@ function () {
   }], [{
     key: "clickedHeight",
     value: function clickedHeight(event) {
-      var clientY, cannonSize, cannonY, cannonHeight, maxDistance, clickedY, result;
+      var clientY, cannonSize, cannonY, cannonHeight, clickedY, result;
       clientY = event.touches ? event.touches[0].clientY : event.clientY;
       cannonSize = $ts.getSize(cannon.elements.cannonArea);
       cannonY = cannonSize.y;
       cannonHeight = cannonSize.height;
-      maxDistance = cannon.config.maxDistance;
       clickedY = clientY - cannonY; // 실제 클릭한 높이 (위에서 아래 => y값)
 
       result = cannonHeight - clickedY; // 실제 클릭한 높이 (아래에서 위 => 실제)
 
-      result = result / cannonHeight; // 클릭 높이 / 최대 높이
-
-      result = result * maxDistance; // 실제 미터
+      result = result / cannon.config.cannonMeterPixelRatio; // 클릭 높이(px) / (px / m) = 실제 높이(m)
 
       return {
         top: clickedY,
-        height: -result,
-        // (-) 없애기
-        distance: maxDistance - result
+        height: -result // (-) 없애기
+
       };
     }
   }, {
@@ -277,6 +261,16 @@ function () {
         target: target,
         distance: config.distance
       });
+    }
+  }, {
+    key: "hidePins",
+    value: function hidePins() {
+      cannon.elements.pinContainer.style.display = "none";
+    }
+  }, {
+    key: "showPins",
+    value: function showPins() {
+      cannon.elements.pinContainer.style.display = "block";
     }
   }]);
 
@@ -343,7 +337,7 @@ function () {
       height = Math.floor(config.height);
       titleText = config.target.children[1].innerHTML;
       mechanicalE = cannon.config.mechanicalE;
-      locationE = this.locationEnergy(height);
+      locationE = Graph.locationEnergy(height);
       kineticE = mechanicalE - locationE;
       this.showTitle(titleText);
       this.distance.change(height);
@@ -359,7 +353,7 @@ function () {
         bar.change(0);
       });
     }
-  }, {
+  }], [{
     key: "locationEnergy",
     value: function locationEnergy(distance) {
       return Math.round(cannon.config.constants.graAcc * cannon.config.mass.current * distance);
@@ -402,23 +396,22 @@ function () {
       var height = 0,
           num = 0,
           maxHeight;
-      maxHeight = cannon.config.graph.areaHeight - cannon.config.graph.tipHeight;
+      maxHeight = cannon.config.graph.areaHeight - cannon.config.graph.tipHeight; // 높이
 
       if (this.name === "distance") {
-        // 높이
         height = value / Math.floor(-cannon.config.maxDistance) * maxHeight;
         num = value;
-      } else if (this.name === "mechanicalEnergy") {
-        // 역학적 에너지
-        if (value) {
-          height = maxHeight;
-          num = value;
-        }
-      } else {
-        // 운동 에너지 && 위치 에너지
-        height = value / cannon.config.mechanicalE * maxHeight;
-        num = value;
-      }
+      } // 역학적 에너지
+      else if (this.name === "mechanicalEnergy") {
+          if (value) {
+            height = maxHeight;
+            num = value;
+          }
+        } // 운동 에너지 & 위치 에너지
+        else {
+            height = value / cannon.config.mechanicalE * maxHeight;
+            num = value;
+          }
 
       this.element.style.height = "".concat(height, "px");
       this.num.innerHTML = "".concat(num);
@@ -444,11 +437,19 @@ function () {
     this.ball = null;
     this.line = null;
     this.graph = null;
+    this.commentBox = new CommentBox({
+      container: $ts.getEl(".commentBox")[0],
+      comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0])
+    }, config.comment);
+    this.scale = new $cale({
+      target: $ts.getEl(".contentsArea")[0]
+    });
   }
 
   _createClass(Cannon, [{
     key: "initiate",
     value: function initiate() {
+      this.commentBox.start();
       this.initiateHTMLelements();
       this.initiateEfSound();
       this.initiateBtns();
@@ -665,5 +666,4 @@ var cannon = new Cannon({
   cannonArea: $ts.getEl(".cannonArea")[0],
   pinContainer: $ts.getEl(".cannonLinePins")[0]
 }, config);
-cannon.initiate();
-console.info(cannon);
+cannon.initiate(); // console.info(cannon);
