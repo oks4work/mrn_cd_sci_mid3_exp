@@ -137,12 +137,6 @@ class CannonLine {
         this.area.style.display = "block";
     }
 
-    // reset() {
-    //     this.area.style.height = 0;
-    //     this.increaseLine.style.height = 0;
-    //     this.descendLine.style.height = 0;
-    // }
-
     pinDistributor(config) {
         if (this.pinCount < cannon.config.pin.maxLength) {
             this.pinMaker(config);
@@ -263,7 +257,7 @@ class Graph {
     changes(config) {
         let height, titleText, mechanicalE, locationE, kineticE;
 
-        height = Math.floor(config.height);
+        height = Math.floor(-config.height);
         titleText = config.target.children[1].innerHTML;
         mechanicalE = cannon.config.mechanicalE;
         locationE = Graph.locationEnergy(height);
@@ -380,13 +374,13 @@ class Cannon {
 
     initiateHTMLelements() {
         let intervalID = window.setInterval(() => {
-            let size = $ts.getSize(this.elements.cannonArea);
+            let cannonAreaStyle = $ts.getStyles(this.elements.cannonArea);
 
-            if (size.y) {
+            if (cannonAreaStyle.left) {
                 window.clearInterval(intervalID);
 
-                this.elements.pinContainer.style.top = `${size.y}px`;
-                this.elements.pinContainer.style.left = `${size.x}px`;
+                this.elements.pinContainer.style.top = `${cannonAreaStyle.top}px`;
+                this.elements.pinContainer.style.left = `${cannonAreaStyle.left}`;
             }
         });
 

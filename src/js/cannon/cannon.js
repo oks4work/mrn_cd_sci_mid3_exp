@@ -137,12 +137,7 @@ function () {
     key: "showArea",
     value: function showArea() {
       this.area.style.display = "block";
-    } // reset() {
-    //     this.area.style.height = 0;
-    //     this.increaseLine.style.height = 0;
-    //     this.descendLine.style.height = 0;
-    // }
-
+    }
   }, {
     key: "pinDistributor",
     value: function pinDistributor(config) {
@@ -334,7 +329,7 @@ function () {
     key: "changes",
     value: function changes(config) {
       var height, titleText, mechanicalE, locationE, kineticE;
-      height = Math.floor(config.height);
+      height = Math.floor(-config.height);
       titleText = config.target.children[1].innerHTML;
       mechanicalE = cannon.config.mechanicalE;
       locationE = Graph.locationEnergy(height);
@@ -465,12 +460,12 @@ function () {
       var _this2 = this;
 
       var intervalID = window.setInterval(function () {
-        var size = $ts.getSize(_this2.elements.cannonArea);
+        var cannonAreaStyle = $ts.getStyles(_this2.elements.cannonArea);
 
-        if (size.y) {
+        if (cannonAreaStyle.left) {
           window.clearInterval(intervalID);
-          _this2.elements.pinContainer.style.top = "".concat(size.y, "px");
-          _this2.elements.pinContainer.style.left = "".concat(size.x, "px");
+          _this2.elements.pinContainer.style.top = "".concat(cannonAreaStyle.top, "px");
+          _this2.elements.pinContainer.style.left = "".concat(cannonAreaStyle.left);
         }
       });
       this.elements.cannonArea.style.height = "".concat(this.config.cannon.areaHeight, "px");
