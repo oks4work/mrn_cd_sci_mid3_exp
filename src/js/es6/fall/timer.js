@@ -2,6 +2,7 @@
     class Timer {
         constructor(config) {
             this.startTime = null;
+            this.continuousTime = 0;
             this.intervalID = null;
             this.count = 1;
             this.config = config;

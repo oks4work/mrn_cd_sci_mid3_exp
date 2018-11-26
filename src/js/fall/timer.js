@@ -14,6 +14,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _classCallCheck(this, Timer);
 
       this.startTime = null;
+      this.continuousTime = 0;
       this.intervalID = null;
       this.count = 1;
       this.config = config;
