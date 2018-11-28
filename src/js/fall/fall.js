@@ -275,9 +275,14 @@ function addEvents() {
     },
     on: function on() {
       timer.startTimer();
+      playBtn.object.pointerOn();
       stopBtn.object.off();
       replayBtn.object.off();
+      replayBtn.object.pointerOn();
       disableAllObjects();
+    },
+    off: function off() {
+      timer.pauseTimer();
     }
   }).addEvent();
   new ClickToggleClass(stopBtn, "on", {
@@ -295,6 +300,8 @@ function addEvents() {
     on: function on() {
       timer.resetTimer();
       playBtn.object.off();
+      playBtn.object.pointerOn();
+      replayBtn.object.pointerOff();
 
       if (!stopBtn.object.isOn) {
         stopBtn.object.on();

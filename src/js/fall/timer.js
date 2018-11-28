@@ -36,13 +36,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log("t: ".concat(_this.timePassedCorr / 1000, "s, v: ").concat(_this.velocity, "m/s, d: ").concat(_this.distance, "m, playback speed: ").concat(_this.config.playbackSpeed));
             drawGraphs(_this.count);
             drawObjects(_this.timePassedCorr === _this.config.limitTime);
-            _this.count++;
+            _this.count++; // 시간이 limit time 지난 경우
 
             if (_this.timePassedCorr >= _this.config.limitTime) {
               _this.pauseTimer();
 
               stopBtn.object.on();
               dropMoves.hide();
+              playBtn.object.pointerOff();
+              replayBtn.object.pointerOn();
             }
           }
         });
@@ -50,6 +52,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       key: "pauseTimer",
       value: function pauseTimer() {
+        this.continuousTime = this.timePassed;
         window.clearInterval(this.intervalID);
       }
     }, {
@@ -57,6 +60,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function resetTimer() {
         window.clearInterval(this.intervalID);
         this.startTime = null;
+        this.continuousTime = 0;
         this.intervalID = null;
         this.count = 1;
         initDropCanvas();
@@ -68,7 +72,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       key: "timePassed",
       get: function get() {
-        return (new Date().getTime() - this.startTime) * this.config.playbackSpeed;
+        return this.continuousTime + (new Date().getTime() - this.startTime) * this.config.playbackSpeed;
       } // 지난 시간(interval 맞춰서 고정)
 
     }, {

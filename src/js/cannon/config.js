@@ -5,14 +5,14 @@ var config = {
     mode: "btn",
     firstShowDelay: 300,
     transitionDuration: 1000,
-    commentTexts: ["위로 던져 올린 물체의 역학적 에너지는 <br />어떻게 될까요?"],
-    commentHideDelay: [3000],
+    commentTexts: ["위치 에너지와 운동 에너지는 어떻게 변할까?"],
+    commentHideDelay: [2000],
     containerTransitionDuration: 300
   },
   velocity: {
-    min: -10,
+    min: -12,
     max: -20,
-    initial: -15,
+    initial: -16,
     current: -15
   },
   mass: {
@@ -46,7 +46,7 @@ var config = {
     // bar 간격
     tipHeight: 30,
     // tip 높이
-    barTransitionDuration: 500 // bar 높이 변하는 속도 (ms)
+    barTransitionDuration: 0 // bar 높이 변하는 속도 (ms)
 
   },
 

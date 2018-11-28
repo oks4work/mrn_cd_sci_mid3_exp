@@ -633,8 +633,8 @@ var DragDrop = function DragDrop(opts) {
       }
 
       coordinates = {
-        x: event.touches[0].clientX,
-        y: event.touches[0].clientY
+        x: event.touches[0] && event.touches[0].clientX || event.changedTouches[0] && event.changedTouches[0].clientX,
+        y: event.touches[0] && event.touches[0].clientY || event.changedTouches[0] && event.changedTouches[0].clientY
       };
     } else {
       if (event.type === "touchend") {

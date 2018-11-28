@@ -64,6 +64,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.element.classList.remove(this.toggleClassName);
       }
     }, {
+      key: "pointerOn",
+      value: function pointerOn() {
+        this.element.style.cursor = "pointer";
+        this.element.style.pointerEvents = "auto";
+      }
+    }, {
+      key: "pointerOff",
+      value: function pointerOff() {
+        this.element.style.cursor = "default";
+        this.element.style.pointerEvents = "none";
+      }
+    }, {
       key: "isOn",
       get: function get() {
         return this.element.classList.contains(this.toggleClassName);
@@ -74,7 +86,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   }();
 
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    console.log(module);
     module.exports = ClickToggleClass;
   } else {
     window.ClickToggleClass = ClickToggleClass;

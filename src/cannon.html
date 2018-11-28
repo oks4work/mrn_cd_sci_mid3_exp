@@ -24,6 +24,8 @@
         <img alt="" class="cannonball" id="cannonball" src="images/cannon/colorRound_top.png"/>
     </div>
 
+    <div class="cannonLineArea_comment">임의의 <br />지점 세 곳을 <br />클릭하세요.</div>
+
     <ul class="cannonLinePins"></ul>
 
     <div class="cannonGraph">
@@ -71,6 +73,7 @@
             <input id="numberInput_velocity" max="20" min="10" step="1" type="number" value="15"/>
             <div class="numberInputContainer_unit"></div>
         </div>
+        <div id="velocityArrow" class="indicator inputIndicator"></div>
 
         <div class="rangeInputContainer">
             <input id="rangeInput_mass" max="11" min="1" step="1" type="range" value="6"/>
@@ -79,9 +82,11 @@
             <input id="numberInput_mass" max="11" min="1" step="1" type="number" value="6"/>
             <div class="numberInputContainer_unit"></div>
         </div>
+        <div id="massArrow" class="indicator inputIndicator"></div>
+
         <ul class="underBar_Btn">
             <li class="playBtn"></li>
-            <li class="stopBtn on"></li>
+            <!--<li class="stopBtn on"></li>-->
             <li class="replayBtn on"></li>
         </ul>
     </div>

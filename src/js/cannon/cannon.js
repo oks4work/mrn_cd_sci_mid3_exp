@@ -72,6 +72,7 @@ function () {
 
     this.element = element;
     this.config = config;
+    this.reset();
   }
 
   _createClass(Ball, [{
@@ -148,7 +149,9 @@ function () {
   }, {
     key: "pinMaker",
     value: function pinMaker(config) {
-      var container, pin, circle, text;
+      var _this = this;
+
+      var container, pin, circle, text, indicator;
       container = cannon.elements.pinContainer;
       pin = $ts.ce({
         tag: "li",
@@ -167,11 +170,25 @@ function () {
         parent: pin
       });
       text.innerHTML = cannon.config.pin.text[this.pinCount];
+      indicator = $ts.ce({
+        tag: "div",
+        class: "indicator pin_indicator",
+        parent: pin
+      });
+      pin.indicator = indicator;
       pin.addEventListener("click", function (e) {
         CannonLine.pinClickHandler(e, config);
       });
       this.pins.push(pin);
       this.pinCount++;
+      this.pins.forEach(function (pin) {
+        pin.indicator.classList.remove("indicating");
+      });
+      window.setTimeout(function () {
+        _this.pins.forEach(function (pin) {
+          pin.indicator.classList.add("indicating");
+        });
+      });
     }
   }, {
     key: "pinDestroyer",
@@ -222,7 +239,7 @@ function () {
       clientY = clientY / cannon.scale.getZoomRate();
       cannonSize = $ts.getSize(cannon.elements.cannonArea);
       cannonY = cannonSize.top;
-      cannonHeight = cannonSize.height;
+      cannonHeight = cannonSize.height / cannon.scale.getZoomRate();
       clickedY = clientY - cannonY; // 실제 클릭한 높이 (위에서 아래 => y값)
 
       result = cannonHeight - clickedY; // 실제 클릭한 높이 (아래에서 위 => 실제)
@@ -254,8 +271,7 @@ function () {
 
       cannon.graph.changes({
         height: config.height,
-        target: target,
-        distance: config.distance
+        target: target
       });
     }
   }, {
@@ -293,7 +309,7 @@ function () {
   _createClass(Graph, [{
     key: "initiate",
     value: function initiate() {
-      var _this = this;
+      var _this2 = this;
 
       this.distance = new Bar($ts.getEl("#distance"));
       this.KE = new Bar($ts.getEl("#kineticEnergy"));
@@ -301,7 +317,7 @@ function () {
       this.ME = new Bar($ts.getEl("#mechanicalEnergy"));
       this.bars = [this.distance, this.KE, this.LE, this.ME];
       this.bars.forEach(function (bar, index) {
-        var bottomText = _this.elements.texts[index];
+        var bottomText = _this2.elements.texts[index];
 
         if (index === 0) {
           bottomText.style.marginLeft = "".concat(cannon.config.graph.barMargin, "px");
@@ -331,11 +347,15 @@ function () {
     value: function changes(config) {
       var height, titleText, mechanicalE, locationE, kineticE;
       height = Math.floor(-config.height);
-      titleText = config.target.children[1].innerHTML;
+
+      if (config.target) {
+        titleText = config.target.children[1].innerHTML;
+        this.showTitle(titleText);
+      }
+
       mechanicalE = cannon.config.mechanicalE;
-      locationE = Graph.locationEnergy(height);
+      locationE = Graph.locationEnergy(-config.height);
       kineticE = mechanicalE - locationE;
-      this.showTitle(titleText);
       this.distance.change(height);
       this.LE.change(locationE);
       this.ME.change(mechanicalE);
@@ -352,7 +372,13 @@ function () {
   }], [{
     key: "locationEnergy",
     value: function locationEnergy(distance) {
-      return Math.round(cannon.config.constants.graAcc * cannon.config.mass.current * distance);
+      var result = Math.round(cannon.config.constants.graAcc * cannon.config.mass.current * distance);
+
+      if (result >= cannon.config.mechanicalE) {
+        result = cannon.config.mechanicalE;
+      }
+
+      return result;
     }
   }]);
 
@@ -417,17 +443,49 @@ function () {
   return Bar;
 }();
 
+var Indicator =
+/*#__PURE__*/
+function () {
+  function Indicator(element) {
+    _classCallCheck(this, Indicator);
+
+    this.element = element;
+    this.hide();
+  }
+
+  _createClass(Indicator, [{
+    key: "indicating",
+    value: function indicating() {
+      this.element.classList.add("indicating");
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      this.element.classList.remove("displayN");
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.element.classList.add("displayN");
+    }
+  }]);
+
+  return Indicator;
+}();
+
 var Cannon =
 /*#__PURE__*/
 function () {
   function Cannon(elements, config) {
+    var _this3 = this;
+
     _classCallCheck(this, Cannon);
 
     this.elements = elements;
     this.config = config;
     this.inputConnections = [];
-    this.playBtn = null;
-    this.stopBtn = null;
+    this.playBtn = null; // this.stopBtn = null;
+
     this.replayBtn = null;
     this.timer = null;
     this.ball = null;
@@ -438,9 +496,24 @@ function () {
       comments: $ts.getEl("p", $ts.getEl(".commentBox_inner")[0]),
       btn: $ts.getEl(".commentNextBtn")[0]
     }, config.comment);
+    this.commentBox.addCallbacks({
+      commentEnd: function commentEnd() {
+        _this3.indicators.velocity.show();
+
+        _this3.indicators.velocity.indicating();
+
+        _this3.indicators.mass.show();
+
+        _this3.indicators.mass.indicating();
+      }
+    });
     this.scale = new $cale({
       target: $ts.getEl(".contentsArea")[0]
     });
+    this.indicators = {
+      velocity: null,
+      mass: null
+    };
   }
 
   _createClass(Cannon, [{
@@ -455,24 +528,26 @@ function () {
       this.initiateBall();
       this.initiateLine();
       this.initiateGraph();
+      this.initiateIndicators();
     }
   }, {
     key: "initiateHTMLelements",
     value: function initiateHTMLelements() {
-      var _this2 = this;
+      var _this4 = this;
 
       var intervalID = window.setInterval(function () {
         var cannonAreaSize, cannonAreaStyle;
-        cannonAreaSize = $ts.getSize(_this2.elements.cannonArea);
-        cannonAreaStyle = $ts.getStyles(_this2.elements.cannonArea);
+        cannonAreaSize = $ts.getSize(_this4.elements.cannonArea);
+        cannonAreaStyle = $ts.getStyles(_this4.elements.cannonArea);
 
         if (cannonAreaSize.top && cannonAreaStyle.left) {
           window.clearInterval(intervalID);
-          _this2.elements.pinContainer.style.top = "".concat(cannonAreaSize.top, "px");
-          _this2.elements.pinContainer.style.left = "".concat(cannonAreaStyle.left);
+          _this4.elements.pinContainer.style.top = "".concat(cannonAreaSize.top, "px");
+          _this4.elements.pinContainer.style.left = "".concat(cannonAreaStyle.left);
         }
       });
       this.elements.cannonArea.style.height = "".concat(this.config.cannon.areaHeight, "px");
+      this.elements.lineComment.style.display = "none";
     }
   }, {
     key: "initiateEfSound",
@@ -483,69 +558,82 @@ function () {
   }, {
     key: "initiateBtns",
     value: function initiateBtns() {
-      var _this3 = this;
+      var _this5 = this;
 
       this.playBtn = new ClickToggleClass(this.elements.playBtn, "on", {
         click: function click() {
-          _this3.efSound.play("media/click.mp3");
+          _this5.efSound.play("media/click.mp3");
         },
         on: function on() {
-          _this3.timer.resetConfig({
+          _this5.timer.resetConfig({
             startVelocity: cannon.config.velocity.current,
             mass: cannon.config.mass.current
           });
 
-          _this3.timer.startTimer();
+          _this5.playBtn.pointerOn();
 
-          _this3.stopBtn.off();
+          _this5.replayBtn.off();
 
-          _this3.replayBtn.off();
+          _this5.line.hideAll();
 
-          _this3.line.hideAll();
+          _this5.elements.lineComment.style.display = "none";
 
-          _this3.graph.reset();
+          _this5.graph.reset();
 
-          _this3.disableInputs();
-        }
-      });
-      this.stopBtn = new ClickToggleClass(this.elements.stopBtn, "on", {
-        click: function click() {
-          _this3.efSound.play("media/click.mp3");
+          _this5.disableInputs();
+
+          _this5.timer.startTimer();
         },
-        on: function on() {
-          _this3.timer.pauseTimer();
+        off: function off() {
+          _this5.timer.pauseTimer();
 
-          cannon.playBtn.off();
+          _this5.line.showAll();
 
-          _this3.line.showAll();
+          _this5.elements.lineComment.style.display = "block"; // this.replayBtn.on();
         }
-      });
+      }); // this.stopBtn = new ClickToggleClass(this.elements.stopBtn, "on", {
+      //     click: () => {
+      //         this.efSound.play("media/click.mp3");
+      //     },
+      //     on: () => {
+      //         this.timer.pauseTimer();
+      //
+      //         cannon.playBtn.off();
+      //
+      //         this.line.showAll();
+      //     }
+      // });
+
       this.replayBtn = new ClickToggleClass(this.elements.replayBtn, "on", {
         click: function click() {
-          _this3.efSound.play("media/click.mp3");
+          _this5.efSound.play("media/click.mp3");
         },
         on: function on() {
-          _this3.reset();
+          _this5.reset();
         }
       });
-      this.playBtn.addEvent();
-      this.stopBtn.addEvent();
+      this.playBtn.addEvent(); // this.stopBtn.addEvent();
+
       this.replayBtn.addEvent();
     }
   }, {
     key: "initiateTimer",
     value: function initiateTimer() {
-      var _this4 = this;
+      var _this6 = this;
 
       this.timer = new CannonTimer(cannon.config.timer, {
         interval: function interval() {
-          if (_this4.timer.distance >= 0) {
+          if (_this6.timer.distance > 0) {
             // 끝나는 경우
-            _this4.reset();
+            _this6.reset();
           } else {
-            _this4.ball.move(_this4.timer.distance);
+            _this6.ball.move(_this6.timer.distance);
 
-            _this4.line.change(-_this4.timer.distance);
+            _this6.line.change(-_this6.timer.distance);
+
+            _this6.graph.changes({
+              height: _this6.timer.distance
+            });
           }
         }
       });
@@ -561,7 +649,7 @@ function () {
   }, {
     key: "initiateInputConnections",
     value: function initiateInputConnections() {
-      var _this5 = this;
+      var _this7 = this;
 
       this.elements.inputPairs.forEach(function (pair) {
         var name, inputConn;
@@ -575,7 +663,7 @@ function () {
             });
           },
           change: function change() {
-            var _this6 = this;
+            var _this8 = this;
 
             // this : callback 보낸 input tag
             var value, self;
@@ -585,15 +673,27 @@ function () {
             cannon.config[self.name].current = self.name === "mass" ? value : -value;
             self.inputs.forEach(function (input) {
               // 둘 중 다른 input에 넣기
-              if (_this6 !== input) {
+              if (_this8 !== input) {
                 input.value = value;
               }
             });
+
+            if (self.name === "mass") {
+              if (!cannon.indicators.mass.changedFirst) {
+                cannon.indicators.mass.hide();
+                cannon.indicators.mass.changedirst = true;
+              }
+            } else {
+              if (!cannon.indicators.velocity.changedFirst) {
+                cannon.indicators.velocity.hide();
+                cannon.indicators.velocity.changedirst = true;
+              }
+            }
           }
         });
         inputConn.initiate();
 
-        _this5.inputConnections.push(inputConn);
+        _this7.inputConnections.push(inputConn);
       });
     }
   }, {
@@ -624,6 +724,14 @@ function () {
       this.graph.initiate();
     }
   }, {
+    key: "initiateIndicators",
+    value: function initiateIndicators() {
+      this.indicators.velocity = new Indicator(this.elements.indicators.velocity);
+      this.indicators.velocity.changedFirst = false;
+      this.indicators.mass = new Indicator(this.elements.indicators.mass);
+      this.indicators.mass.changedFirst = false;
+    }
+  }, {
     key: "disableInputs",
     value: function disableInputs() {
       this.elements.inputPairs.forEach(function (pair) {
@@ -643,10 +751,11 @@ function () {
     key: "reset",
     value: function reset() {
       this.timer.resetTimer();
-      this.playBtn.off();
-      this.stopBtn.on();
+      this.playBtn.off(); // this.stopBtn.on();
+
       this.replayBtn.on();
       this.line.reset();
+      this.elements.lineComment.style.display = "none";
       this.ball.reset();
       this.graph.reset();
       this.ableInputs();
@@ -659,10 +768,15 @@ function () {
 var cannon = new Cannon({
   container: $ts.getEl(".contentsArea")[0],
   playBtn: $ts.getEl(".playBtn")[0],
-  stopBtn: $ts.getEl(".stopBtn")[0],
+  // stopBtn: $ts.getEl(".stopBtn")[0],
   replayBtn: $ts.getEl(".replayBtn")[0],
   inputPairs: [[$ts.getEl("#rangeInput_velocity"), $ts.getEl("#numberInput_velocity")], [$ts.getEl("#rangeInput_mass"), $ts.getEl("#numberInput_mass")]],
   cannonArea: $ts.getEl(".cannonArea")[0],
-  pinContainer: $ts.getEl(".cannonLinePins")[0]
+  lineComment: $ts.getEl(".cannonLineArea_comment")[0],
+  pinContainer: $ts.getEl(".cannonLinePins")[0],
+  indicators: {
+    velocity: $ts.getEl("#velocityArrow"),
+    mass: $ts.getEl("#massArrow")
+  }
 }, config);
-cannon.initiate(); // console.info(cannon);
+cannon.initiate();

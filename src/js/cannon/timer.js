@@ -31,9 +31,14 @@ function () {
     value: function startTimer() {
       var _this = this;
 
-      this.startTime = new Date().getTime();
+      var startIndicator = false;
       this.intervalID = window.setInterval(function () {
-        // console.log(this.timePassed);
+        if (!startIndicator) {
+          _this.startTime = new Date().getTime();
+          startIndicator = true;
+        } // console.log(this.timePassed);
+
+
         if (_this.callbacks && _this.callbacks.interval) {
           _this.callbacks.interval();
         }
@@ -56,17 +61,7 @@ function () {
     key: "timePassed",
     get: function get() {
       return this.continuousTime + (new Date().getTime() - this.startTime) * this.config.playbackSpeed;
-    } // 속도
-    // get velocity() { // 속도 = 중력가속도 * 시간
-    //     return (this.config.graAcc * 10) * this.timePassed / (this.config.timeToVeConst * 10);
-    // }
-    // 거리
-    // get distance() { // 거리 = 중력가속도 * 속도의 제곱 / 2
-    //     let result = (this.config.graAcc * 10) * Math.pow(this.timePassed / this.config.timeToVeConst, 2) / 20;
-    //     result = Math.round(result * 100) / 100;
-    //     return result;
-    // }
-
+    }
   }]);
 
   return Timer;

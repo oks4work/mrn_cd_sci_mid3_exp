@@ -1,5 +1,6 @@
 @import (reference) "lib/base.less";
 @import "lib/reset.less";
+@import "lib/ani.less";
 @import "font.less";
 @import "common.less";
 @import "input.less";
@@ -91,7 +92,7 @@
 			//line-height: 31px;
 
 			> .num {
-				margin-right: .1em;
+				margin-right: .25em;
 			}
 
 			> .NMyeongjoEB {
@@ -197,6 +198,37 @@
 	}
 }
 
+.indicator {
+	&.displayN {
+		display: none;
+	}
+
+	&.indicating {
+		animation: 2s ease-in infinite twinkle;
+		//animation-name: twinkle;
+		//animation-duration: 2s;
+		//animation-timing-function: ease-in-out;
+		//animation-iteration-count: infinite;
+	}
+}
+
+.inputIndicator {
+	position: absolute;
+	top: -25px;
+	width: 59px;
+	height: 58px;
+	background: url(../images/cannon/inputIndicator.png) center / cover no-repeat;
+	opacity: 0;
+
+	&#velocityArrow {
+		left: 200px;
+	}
+
+	&#massArrow {
+		left: 490px;
+	}
+}
+
 .underBar_Btn {
 	display: flex;
 	justify-content: center;
@@ -249,6 +281,10 @@
 	bottom: -36px;
 	left: 4px;
 	z-index: 1;
+
+	//&.displayN {
+	//	display: none;
+	//}
 }
 
 .cannonLineArea {
@@ -282,6 +318,19 @@
 			top: 1px;
 		}
 	}
+}
+
+.cannonLineArea_comment {
+	box-sizing: border-box;
+	position: absolute;
+	top: 360px;
+	left: 30px;
+	width: 190px;
+	height: 173px;
+	padding: 45px 30px 0 30px;
+	background: url(../images/cannon/textCloud.png) center/contain no-repeat;
+	font-size: 18px;
+	text-align: center;
 }
 
 .cannonLinePins {
@@ -325,6 +374,15 @@
 			}
 		}
 	}
+}
+
+.pin_indicator {
+	position: absolute;
+	top: 10px;
+	left: 55px;
+	width: 68px;
+	height: 35px;
+	background: url(../images/cannon/pinIndicator.png) center / cover no-repeat;
 }
 
 .guideText {

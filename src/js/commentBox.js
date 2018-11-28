@@ -15,9 +15,21 @@ function () {
     this.elements = elements;
     this.config = config;
     this.count = 0;
+    this.callbacks = {
+      commentEnd: undefined
+    };
   }
 
   _createClass(CommentBox, [{
+    key: "addCallbacks",
+    value: function addCallbacks(callbacks) {
+      for (var prop in this.callbacks) {
+        if (callbacks[prop]) {
+          this.callbacks[prop] = callbacks[prop];
+        }
+      }
+    }
+  }, {
     key: "setBasicStyles",
     value: function setBasicStyles() {
       var _this = this;
@@ -107,6 +119,10 @@ function () {
       window.setTimeout(function () {
         _this5.elements.container.style.display = "none";
       }, this.config.containerTransitionDuration);
+
+      if (this.callbacks && this.callbacks.commentEnd) {
+        this.callbacks.commentEnd();
+      }
     }
   }, {
     key: "hideBtn",

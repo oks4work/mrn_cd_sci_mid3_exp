@@ -1,8 +1,7 @@
-"use strict";
-
-/////////////////////////
+"use strict"; /////////////////////////
 // DragObj Constructor //
 /////////////////////////
+
 function DragObj(dragElement, DragDrop) {
   this.dragElement = dragElement;
   this.DragDrop = DragDrop; // getter, setter 설정하기
@@ -148,8 +147,8 @@ function DragObj(dragElement, DragDrop) {
   }; // drag positioning
 
 
-  this.dragPositioning = function (coordinates) { console.log("dragPositioning", this, coordinates);
-    // console.log(coordinates.constructor.name); // dropArea 위에 떨어질 경우
+  this.dragPositioning = function (coordinates) {
+    console.log("dragPositioning", this, coordinates); // console.log(coordinates.constructor.name); // dropArea 위에 떨어질 경우
 
     let scale = this.DragDrop.scale ? this.DragDrop.scale() : 1;
 
@@ -178,12 +177,13 @@ function DragObj(dragElement, DragDrop) {
           this.dragPositioning(this.DragDrop.eventStartCoordinates);
 
           if (this.DragDrop.completeCallback) {
-              this.DragDrop.completeCallback(this, areaObjNow);
+            this.DragDrop.completeCallback(this, areaObjNow);
           }
-          return;
-        }
 
-        // 클래스 부여해주는 옵션인 경우
+          return;
+        } // 클래스 부여해주는 옵션인 경우
+
+
         if (this.DragDrop.opts.class) {
           this.classOn(); // area 위치에 맞추는 경우
         } else {
@@ -212,7 +212,6 @@ function DragObj(dragElement, DragDrop) {
       });
     }
   };
-
 } //////////////////////////
 // DropArea Constructor //
 //////////////////////////
@@ -306,17 +305,16 @@ var DragDrop = function DragDrop(opts) {
   this.dragObjs = [];
   this.areaObjs = [];
   this.moveEventIsOutCorrection = 10; // options
+
   this.completeCallback = opts.completeCallback || null;
   this.scale = opts.scale || null;
-
   this.opts = {
     answer: false,
     class: false,
     disableArea: false,
     noComplete: false
-  };
+  }; // getter, setter 설정하기
 
-  // getter, setter 설정하기
   Object.defineProperties(this, {
     dragObjsLen: {
       get: function get() {
@@ -598,7 +596,6 @@ var DragDrop = function DragDrop(opts) {
     }
 
     self = this.self;
-
     self.dragObjNow.dragPositioning(coordinates);
     moveEventIsOut = self.checkMoveEventIsOut(coordinates);
 
@@ -636,8 +633,8 @@ var DragDrop = function DragDrop(opts) {
       }
 
       coordinates = {
-        x: event.touches[0].clientX,
-        y: event.touches[0].clientY
+        x: (event.touches[0] && event.touches[0].clientX) || (event.changedTouches[0] && event.changedTouches[0].clientX),
+        y: (event.touches[0] && event.touches[0].clientY) || (event.changedTouches[0] && event.changedTouches[0].clientY)
       };
     } else {
       if (event.type === "touchend") {
@@ -701,22 +698,23 @@ var DragDrop = function DragDrop(opts) {
       obj: null
     };
   };
-};
-
-///////////////
+}; ///////////////
 // polyfills //
 ///////////////
-if (!String.prototype.includes) {
-    String.prototype.includes = function(search, start) {
-        'use strict';
-        if (typeof start !== 'number') {
-            start = 0;
-        }
 
-        if (start + search.length > this.length) {
-            return false;
-        } else {
-            return this.indexOf(search, start) !== -1;
-        }
-    };
+
+if (!String.prototype.includes) {
+  String.prototype.includes = function (search, start) {
+    'use strict';
+
+    if (typeof start !== 'number') {
+      start = 0;
+    }
+
+    if (start + search.length > this.length) {
+      return false;
+    } else {
+      return this.indexOf(search, start) !== -1;
+    }
+  };
 }
