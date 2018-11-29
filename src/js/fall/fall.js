@@ -310,4 +310,9 @@ function addEvents() {
       ableAllObjects(); // disableSelectedObjects();
     }
   }).addEvent();
+  document.addEventListener('touchmove', function (event) {
+    event.preventDefault();
+  }, {
+    passive: false
+  });
 }
