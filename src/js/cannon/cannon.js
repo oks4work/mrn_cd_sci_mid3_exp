@@ -176,9 +176,6 @@ function () {
         parent: pin
       });
       pin.indicator = indicator;
-      pin.addEventListener("click", function (e) {
-        CannonLine.pinClickHandler(e, config);
-      });
       this.pins.push(pin);
       this.pinCount++;
       this.pins.forEach(function (pin) {
@@ -188,6 +185,15 @@ function () {
         _this.pins.forEach(function (pin) {
           pin.indicator.classList.add("indicating");
         });
+      });
+      circle.addEventListener("click", function (e) {
+        CannonLine.pinClickHandler(e, config);
+      });
+      text.addEventListener("click", function (e) {
+        CannonLine.pinClickHandler(e, config);
+      });
+      indicator.addEventListener("click", function (e) {
+        CannonLine.pinClickHandler(e, config);
       });
     }
   }, {
@@ -548,6 +554,11 @@ function () {
       });
       this.elements.cannonArea.style.height = "".concat(this.config.cannon.areaHeight, "px");
       this.elements.lineComment.style.display = "none";
+      document.addEventListener('touchmove', function (event) {
+        event.preventDefault();
+      }, {
+        passive: false
+      });
     }
   }, {
     key: "initiateEfSound",
