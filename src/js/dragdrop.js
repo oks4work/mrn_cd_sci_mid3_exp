@@ -148,7 +148,6 @@ function DragObj(dragElement, DragDrop) {
 
 
   this.dragPositioning = function (coordinates) {
-    console.log("dragPositioning", this, coordinates); // console.log(coordinates.constructor.name); // dropArea 위에 떨어질 경우
 
     var scale = this.DragDrop.scale ? this.DragDrop.scale() : 1;
 
