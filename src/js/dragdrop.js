@@ -1,4 +1,6 @@
-"use strict"; /////////////////////////
+"use strict";
+
+/////////////////////////
 // DragObj Constructor //
 /////////////////////////
 
@@ -697,7 +699,9 @@ var DragDrop = function DragDrop(opts) {
       obj: null
     };
   };
-}; ///////////////
+};
+
+///////////////
 // polyfills //
 ///////////////
 
